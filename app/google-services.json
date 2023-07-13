@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "43931775491",
+    "project_id": "flightbookingapp-307f0",
+    "storage_bucket": "flightbookingapp-307f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43931775491:android:f84157338c843fd7dd1436",
+        "android_client_info": {
+          "package_name": "in.tripzygo.tripzygoflightbookingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43931775491-f77g676foiuqq4nc8970urrodp9i3q77.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApQ6XW8yjE9ZblOEs1HrDHncdYyMnBcnk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43931775491-f77g676foiuqq4nc8970urrodp9i3q77.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

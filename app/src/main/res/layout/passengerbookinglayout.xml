@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/textLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/passengerTextBooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:paddingStart="4dp"
+            android:text="Passenger"
+            android:textColor="@color/darkGrey"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/pnrTextBooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:drawablePadding="5dp"
+            android:gravity="right"
+            android:paddingStart="4dp"
+            android:text="PNR / Status Seat"
+            android:textColor="@color/darkGrey"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dataLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textLayout"
+        android:layout_marginStart="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/passengerNameTextBooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/passengerTextBooking"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:padding="4dp"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/pnrBooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pnrTextBooking"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:drawablePadding="5dp"
+            android:gravity="right"
+            android:padding="4dp"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+</RelativeLayout>

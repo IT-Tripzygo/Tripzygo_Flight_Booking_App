@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/selector_home"
+        android:iconTint="@color/red"
+        android:title="Home" />
+    <item
+        android:id="@+id/navigation_booking"
+        android:icon="@drawable/selector_booking"
+        android:iconTint="@color/red"
+        android:title="My Trips" />
+
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/selector_profile"
+        android:iconTint="@color/red"
+        android:title="Profile" />
+
+</menu>

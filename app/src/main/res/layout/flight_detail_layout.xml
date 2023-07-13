@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/flightDetail1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
+
+        <TextView
+            android:id="@+id/airline_name_checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@id/FlightImg"
+            android:text="IndiGo 6E 6231"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/FlightImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="1.5dp">
+
+            <ImageView
+                android:id="@+id/airlineImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="center"
+                android:src="@drawable/indigo" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:id="@+id/viewsept1"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/FlightImg"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/viewsepertor" />
+
+        <TextView
+            android:id="@+id/DepartureCityCodeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:padding="4dp"
+            android:text="DEL"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/DepartureTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept1"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/DepartureCityCodeText"
+            android:padding="4dp"
+            android:text="05:15"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/image_clock"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/viewsept1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/clock_regular" />
+
+        <TextView
+            android:id="@+id/timeText_Flight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_clock"
+            android:layout_centerHorizontal="true"
+            android:elevation="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="1h 25m"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/darkGrey"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/ArrivalCityCodeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept1"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/ArrivalTimeText"
+            android:padding="4dp"
+            android:text="DEL"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/ArrivalTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept1"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:padding="4dp"
+            android:text="05:15"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/DepartureDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/DepartureCityCodeText"
+            android:layout_marginStart="10dp"
+            android:padding="4dp"
+            android:text="Wed, 03 May"
+            android:textColor="@color/darkGrey"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/ArrivalDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ArrivalCityCodeText"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:padding="4dp"
+            android:text="Wed, 03 May"
+            android:textColor="@color/darkGrey"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/DepartureAirportText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/DepartureDateText"
+            android:layout_marginStart="10dp"
+            android:padding="4dp"
+            android:text="Devi Ahilyabai Holkar International Airport"
+            android:textColor="@color/darkGrey"
+            android:textSize="13sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/ArrivalAirportText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ArrivalDateText"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="right"
+            android:padding="4dp"
+            android:text="Devi Ahilyabai Holkar International Airport"
+            android:textColor="@color/darkGrey"
+            android:textSize="13sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/DepartureTerminalText"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/DepartureAirportText"
+            android:layout_marginStart="10dp"
+            android:layout_above="@id/viewsept2"
+            android:padding="4dp"
+            android:text="Terminal 1"
+            android:textColor="@color/darkGrey"
+            android:textSize="11sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/ArrivalTerminalText"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ArrivalAirportText"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="right"
+            android:padding="4dp"
+            android:text="Terminal 1"
+            android:textColor="@color/darkGrey"
+            android:textSize="11sp"
+            android:textStyle="normal" />
+
+        <View
+            android:id="@+id/viewsept2"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/ArrivalTerminalText"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/viewsepertor" />
+
+        <TextView
+            android:id="@+id/cabin_baggage"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept2"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/person_walking_luggage_solid"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:padding="4dp"
+            android:text="Cabin: 7 kg (1 peice per pax )"
+            android:textColor="@color/darkGrey"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/checkIn_baggage"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept2"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:drawableStart="@drawable/person_walking_luggage_solid"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:padding="4dp"
+            android:text="Check-in : 15 kg ( 01 peice only)"
+            android:textColor="@color/darkGrey"
+            android:textSize="13sp" />
+
+        <View
+            android:id="@+id/viewsept3"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/checkIn_baggage"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/viewsepertor" />
+
+        <TextView
+            android:id="@+id/layoverText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/flight_layover_back"
+            android:padding="5dp"
+            android:text="Flight change in Ahemdabad. Layover of 2h 15m"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+    </RelativeLayout>
+
+</RelativeLayout>

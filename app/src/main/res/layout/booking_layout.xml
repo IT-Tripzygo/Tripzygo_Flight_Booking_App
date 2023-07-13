@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="10dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="10dp">
+
+    <TextView
+        android:id="@+id/booking_destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_marginStart="5dp"
+        android:text="Trip to Indore"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="normal" />
+    <TextView
+        android:id="@+id/bookingDepartureCityCodeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/booking_destination"
+        android:layout_marginStart="5dp"
+        android:padding="4dp"
+        android:text="DEL"
+        android:textColor="@color/darkGrey"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+    <ImageView
+        android:id="@+id/bookingAirplane"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@id/booking_destination"
+        android:layout_marginTop="5dp"
+        android:padding="4dp"
+        android:layout_toEndOf="@id/bookingDepartureCityCodeText"
+        android:src="@drawable/baseline_flight_24" />
+
+    <TextView
+        android:id="@+id/bookingArrivalCityCodeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/booking_destination"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@id/bookingAirplane"
+        android:padding="4dp"
+        android:text="IDR"
+        android:textColor="@color/darkGrey"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+    <TextView
+        android:id="@+id/bookingArrivalDateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="4dp"
+        android:text="Wed, 03 May"
+        android:textColor="@color/darkGrey"
+        android:textSize="15sp"
+        android:textStyle="normal" />
+    <TextView
+        android:id="@+id/booking_airline_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Indigo 6E 2244"
+        android:layout_below="@id/bookingDepartureCityCodeText"
+        android:textColor="@color/darkGrey"
+        android:textSize="15sp"
+        android:padding="4dp"
+        android:layout_marginStart="5dp"
+        android:textStyle="normal" />
+    <TextView
+        android:id="@+id/completedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="completed"
+        android:textAllCaps="true"
+        android:layout_below="@id/booking_airline_name"
+        android:textColor="@color/forestGreen"
+        android:textSize="15sp"
+        android:visibility="gone"
+        android:padding="4dp"
+        android:layout_marginStart="5dp"
+        android:textStyle="normal" />
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@id/completedText"
+        android:layout_marginStart="-10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="-10dp"
+        android:background="@drawable/viewsepertor" />
+</RelativeLayout>

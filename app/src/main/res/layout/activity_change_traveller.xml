@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ChangeTravellerActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/refs"
+            app:navigationIcon="@drawable/baseline_arrow_back_24">
+
+            <TextView
+                android:id="@+id/Done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:padding="5dp"
+                android:text="Done"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="normal" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <TextView
+            android:id="@+id/selectAdultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar_change"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"
+            android:text="Select Adult"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/changeAdultRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/selectAdultText"
+            android:layout_margin="5dp" />
+
+        <View
+            android:id="@+id/viewsept3"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/changeAdultRecycler"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/viewsepertor" />
+
+        <TextView
+            android:id="@+id/ADDText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept3"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:drawablePadding="20dp"
+            android:gravity="center_vertical"
+            android:padding="4dp"
+            android:text="Add New Adult"
+            android:textColor="@color/blue"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            app:drawableEndCompat="@drawable/baseline_arrow_forward_ios_24"
+            app:drawableTint="@color/grey" />
+
+        <View
+            android:id="@+id/viewsept5"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/ADDText"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/viewsepertor" />
+
+        <TextView
+            android:id="@+id/selectChildText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept5"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"
+            android:text="Select Child"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/changeChildRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/selectChildText"
+            android:layout_margin="5dp" />
+
+        <View
+            android:id="@+id/viewsept4"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/changeChildRecycler"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/viewsepertor" />
+
+        <TextView
+            android:id="@+id/ADDChildText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept4"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:drawablePadding="20dp"
+            android:gravity="center_vertical"
+            android:padding="4dp"
+            android:text="Add New Child "
+            android:textColor="@color/blue"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            app:drawableEndCompat="@drawable/baseline_arrow_forward_ios_24"
+            app:drawableTint="@color/grey" />
+
+        <View
+            android:id="@+id/viewsept6"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/ADDChildText"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/viewsepertor" />
+
+        <TextView
+            android:id="@+id/selectInfantText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept6"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"
+            android:text="Select Infant"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/changeInfantRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/selectInfantText"
+            android:layout_margin="5dp" />
+
+        <View
+            android:id="@+id/viewsept7"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/changeInfantRecycler"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/viewsepertor" />
+
+        <TextView
+            android:id="@+id/ADDInfantText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewsept7"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:drawablePadding="20dp"
+            android:gravity="center_vertical"
+            android:padding="4dp"
+            android:text="Add New Infant "
+            android:textColor="@color/blue"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            app:drawableEndCompat="@drawable/baseline_arrow_forward_ios_24"
+            app:drawableTint="@color/grey" />
+
+        <View
+            android:id="@+id/viewsept8"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/ADDInfantText"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/viewsepertor" />
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
