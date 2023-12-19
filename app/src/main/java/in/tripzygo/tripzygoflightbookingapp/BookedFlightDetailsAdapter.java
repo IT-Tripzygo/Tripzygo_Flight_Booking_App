@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -70,6 +73,13 @@ public class BookedFlightDetailsAdapter extends RecyclerView.Adapter<BookedFligh
         JsonObject jsonObject = sI.get(position).getAsJsonObject();
         JsonArray totalPriceList = gson.fromJson(flightDetails.getTotalPriceList(), new TypeToken<JsonArray>() {
         }.getType());
+        StorageReference storageReference1 = FirebaseStorage.getInstance().getReference().child("AirlineLogos").child(jsonObject.getAsJsonObject("fD").getAsJsonObject("aI").get("code").getAsString() + ".png");
+        storageReference1.getDownloadUrl().addOnSuccessListener(uri -> {
+            Glide.with(context).load(uri).into(holder.airlineImage);
+        }).addOnFailureListener(e -> {
+            System.out.println("storageReference1 = " + storageReference1);
+            System.out.println("e.getMessage() = " + e.getMessage());
+        });
         holder.airline_name.setText(jsonObject.getAsJsonObject("fD").getAsJsonObject("aI").get("name").getAsString() + " " + jsonObject.getAsJsonObject("fD").get("fN").getAsString());
         holder.DepartureCityCodeText.setText(jsonObject.getAsJsonObject("da").get("cityCode").getAsString());
         holder.DepartureAirportText.setText(jsonObject.getAsJsonObject("da").get("name").getAsString());
@@ -137,7 +147,6 @@ public class BookedFlightDetailsAdapter extends RecyclerView.Adapter<BookedFligh
             if (jsonObject.has("cT")) {
                 String city = jsonObject.getAsJsonObject("aa").get("city").getAsString();
                 int minutes = jsonObject.get("cT").getAsInt();
-
                 long Minutes_differences = minutes % 60;
                 long Hours_differences = (minutes / 60) % 24;
                 holder.layoverTextView.setText("Flight change in " + city + ". Layover of " + Hours_differences + "h " + Minutes_differences + "m");
@@ -149,7 +158,7 @@ public class BookedFlightDetailsAdapter extends RecyclerView.Adapter<BookedFligh
         }
         holder.passengerRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         System.out.println("gson = " + gson.toJson(passengerArray));
-        String str = jsonObject.getAsJsonObject("da").get("cityCode").getAsString() + "-" + jsonObject.getAsJsonObject("aa").get("cityCode").getAsString();
+        String str = jsonObject.getAsJsonObject("da").get("code").getAsString() + "-" + jsonObject.getAsJsonObject("aa").get("code").getAsString();
         PassengerBookingAdapter passengerBookingAdapter = new PassengerBookingAdapter(passengerArray, context, str);
         holder.passengerRecyclerView.setAdapter(passengerBookingAdapter);
 

@@ -73,29 +73,35 @@ public class OtpActivity extends AppCompatActivity {
     private void signinwithcredentials(PhoneAuthCredential phoneAuthCredential) {
         mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                reference = FirebaseDatabase.getInstance("https://flightbookingapp-307f0-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
-                HashMap<String, Object> userMap = new HashMap<>();
-                userMap.put(user.getPhone_no(), user);
-                reference.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            loadingBar.dismiss();
-                            SharedPreference.storeUser(OtpActivity.this, user);
-                            SharedPreference.storeLogin(OtpActivity.this, "Logged in");
-                            startActivity(new Intent(OtpActivity.this, MainActivity.class));
-                            finish();
+                if (phoneExisted) {
+                    loadingBar.dismiss();
+                    SharedPreference.storeUser(OtpActivity.this, user);
+                    SharedPreference.storeLogin(OtpActivity.this, "Logged in");
+                    startActivity(new Intent(OtpActivity.this, MainActivity.class));
+                    finish();
+                } else {
+                    reference = FirebaseDatabase.getInstance("https://flightbookingapp-307f0-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+                    HashMap<String, Object> userMap = new HashMap<>();
+                    userMap.put(user.getPhone_no(), user);
+                    reference.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                loadingBar.dismiss();
+                                SharedPreference.storeUser(OtpActivity.this, user);
+                                SharedPreference.storeLogin(OtpActivity.this, "Logged in");
+                                startActivity(new Intent(OtpActivity.this, MainActivity.class));
+                                finish();
+                            }
                         }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        System.out.println("e = " + e.getMessage());
-                    }
-                });
-                SharedPreference.storeLogin(OtpActivity.this, "Logged in");
-                startActivity(new Intent(OtpActivity.this, MainActivity.class));
-                finish();
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            System.out.println("e = " + e.getMessage());
+                        }
+                    });
+                }
+
 
             }
         });

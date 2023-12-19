@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -26,9 +27,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.content.res.AppCompatResources;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -37,6 +40,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.kizitonwose.calendar.view.CalendarView;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +50,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -52,15 +60,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import in.tripzygo.tripzygoflightbookingapp.ArrivalCityAdapter;
 import in.tripzygo.tripzygoflightbookingapp.FlightListActivity;
 import in.tripzygo.tripzygoflightbookingapp.Modals.AirportCode;
 import in.tripzygo.tripzygoflightbookingapp.R;
 import in.tripzygo.tripzygoflightbookingapp.ReturnFlightsActivity;
 import in.tripzygo.tripzygoflightbookingapp.SearchAdapter;
+import in.tripzygo.tripzygoflightbookingapp.SliderAdapter;
 import in.tripzygo.tripzygoflightbookingapp.Tools.SharedPreference;
 
 public class HomeFragment extends Fragment {
-    TextView fromTextView, toTextView, whenTextView;
+    TextView fromTextView, fromCityTextView, toTextView, toCityTextView, whenTextView, whenReturnTextView, textAddReturn;
+    ConstraintLayout TC, DepartureDate, returnTripDateContainer;
     TextView personTextView, classTextView;
     Button search;
     RadioGroup radioGroup;
@@ -69,9 +80,13 @@ public class HomeFragment extends Fragment {
     DatePickerDialog.OnDateSetListener dateSetListener;
     public static CalendarView calendarView;
     public static LocalDate localDate;
-    String Adult = "1", Children = "0", Infant = "0", Class = "ECONOMY", fromAirport = "", toAirport = "", travelDate = "", returnTravelDate;
+    String Adult = "1", Children = "0", Infant = "0", Class = "ECONOMY", fromAirport = "DEL", toAirport = "BOM", travelDate = "", returnTravelDate, type = "Domestic", fromAirportCity = "Delhi", toAirportCity = "Mumbai";
     boolean oneWay = true;
     LinearLayout passenger;
+    ImageView swapImageView;
+    boolean isDialogOpen = false;
+    SliderView sliderView;
+    List<String> sliderItems = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -83,237 +98,387 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        sliderView = view.findViewById(R.id.imageSlider);
+        sliderView.setIndicatorAnimation(IndicatorAnimationType.SLIDE); //set indicator animation by using IndicatorAnimationType. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        sliderView.setIndicatorSelectedColor(Color.parseColor("#000000"));
+        sliderView.setIndicatorUnselectedColor(Color.WHITE);
+        sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
+        sliderView.startAutoCycle();
         fromTextView = view.findViewById(R.id.fromText);
+        fromCityTextView = view.findViewById(R.id.firstCity);
         toTextView = view.findViewById(R.id.toText);
-        whenTextView = view.findViewById(R.id.calendarText);
-        personTextView = view.findViewById(R.id.personText);
-        classTextView = view.findViewById(R.id.classText);
+        toCityTextView = view.findViewById(R.id.secondCity);
+        swapImageView = view.findViewById(R.id.exchange);
+        whenTextView = view.findViewById(R.id.DepartureDate);
+        whenReturnTextView = view.findViewById(R.id.returnDate);
+        textAddReturn = view.findViewById(R.id.textAddReturn);
+        TC = view.findViewById(R.id.travellersAndClassContainer);
+        DepartureDate = view.findViewById(R.id.departureDateSelection);
+        returnTripDateContainer = view.findViewById(R.id.returnDateContainer);
+        personTextView = view.findViewById(R.id.travellerCount);
+        classTextView = view.findViewById(R.id.classLevel);
         search = view.findViewById(R.id.search);
         passenger = view.findViewById(R.id.passenger);
         radioGroup = view.findViewById(R.id.radio_type);
-        oneWayRadioButton = view.findViewById(R.id.oneway);
+        oneWayRadioButton = view.findViewById(R.id.oneWay);
         returnRadioButton = view.findViewById(R.id.returnway);
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMM yy");
+        travelDate = sdf1.format(calendar.getTime());
+        whenTextView.setText(sdf.format(calendar.getTime()));
+        sliderItems.add("android.resource://in.tripzygo.tripzygoflightbookingapp/drawable/pleasant");
+        sliderItems.add("android.resource://in.tripzygo.tripzygoflightbookingapp/drawable/go_travel");
+        sliderItems.add("android.resource://in.tripzygo.tripzygoflightbookingapp/drawable/world");
+        SliderAdapter adapter = new SliderAdapter(getContext(), sliderItems);
+        sliderView.setSliderAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        textAddReturn.setOnClickListener(view1 -> {
+            oneWay = false;
+            returnRadioButton.setChecked(true);
+            returnRadioButton.setTextAppearance(R.style.RadioBold);
+            oneWayRadioButton.setTextAppearance(R.style.RadioNormal);
+            textAddReturn.setVisibility(View.GONE);
+            returnTripDateContainer.setVisibility(View.VISIBLE);
+            try {
+                Date date = sdf1.parse(travelDate);
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.setTime(date);
+                calendar1.add(Calendar.DAY_OF_MONTH, 1);
+                returnTravelDate = sdf1.format(calendar1.getTime());
+                whenReturnTextView.setText(sdf.format(calendar1.getTime()));
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        });
         radioGroup.setOnCheckedChangeListener((radioGroup1, i) -> {
             switch (radioGroup1.getCheckedRadioButtonId()) {
-                case R.id.oneway:
+                case R.id.oneWay:
                     oneWay = true;
-                    oneWayRadioButton.setTextColor(Color.BLACK);
-                    oneWayRadioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plane_solid, 0, 0, 0);
-                    returnRadioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plane_solid_white, 0, 0, 0);
-                    returnRadioButton.setTextColor(Color.WHITE);
+                    oneWayRadioButton.setTextAppearance(R.style.RadioBold);
+                    returnRadioButton.setTextAppearance(R.style.RadioNormal);
+//                    oneWayRadioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plane_solid, 0, 0, 0);
+//                    returnRadioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plane_solid_white, 0, 0, 0);
+//                    returnRadioButton.setTextColor(Color.WHITE);
+                    returnTripDateContainer.setVisibility(View.GONE);
+                    textAddReturn.setVisibility(View.VISIBLE);
                     break;
                 case R.id.returnway:
                     oneWay = false;
-                    oneWayRadioButton.setTextColor(Color.WHITE);
-                    oneWayRadioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plane_solid_white, 0, 0, 0);
-                    returnRadioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plane_solid, 0, 0, 0);
-                    returnRadioButton.setTextColor(Color.BLACK);
+                    returnRadioButton.setTextAppearance(R.style.RadioBold);
+                    oneWayRadioButton.setTextAppearance(R.style.RadioNormal);
+//                    oneWayRadioButton.setTextColor(Color.WHITE);
+//                    oneWayRadioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plane_solid_white, 0, 0, 0);
+//                    returnRadioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plane_solid, 0, 0, 0);
+//                    returnRadioButton.setTextColor(Color.BLACK);
+                    returnTripDateContainer.setVisibility(View.VISIBLE);
+                    textAddReturn.setVisibility(View.GONE);
+                    Calendar calendar1 = Calendar.getInstance();
+                    calendar1.add(Calendar.DAY_OF_MONTH, 1);
+                    returnTravelDate = sdf1.format(calendar1.getTime());
+                    whenReturnTextView.setText(sdf.format(calendar1.getTime()));
                     break;
             }
         });
         fromTextView.setOnClickListener(view1 -> {
-            Gson gson = new Gson();
-            String json = null;
-            try {
-                InputStream is = getContext().getAssets().open("airportcodes.json");
-                int size = is.available();
-                byte[] buffer = new byte[size];
-                is.read(buffer);
-                is.close();
-                json = new String(buffer, "UTF-8");
-                airportCodes = gson.fromJson(json, new TypeToken<List<AirportCode>>() {
-                }.getType());
-                SharedPreference.storeList(getContext(), "NameList", "Names", airportCodes);
-                final SearchAdapter searchAdapter = new SearchAdapter(getContext(), airportCodes, false);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            if (!isDialogOpen) {
+                isDialogOpen = true;
+                Gson gson = new Gson();
+                String json = null;
+                try {
+                    InputStream is = getContext().getAssets().open("airportcodes.json");
+                    int size = is.available();
+                    byte[] buffer = new byte[size];
+                    is.read(buffer);
+                    is.close();
+                    json = new String(buffer, StandardCharsets.UTF_8);
+                    airportCodes = gson.fromJson(json, new TypeToken<List<AirportCode>>() {
+                    }.getType());
 
-            List<AirportCode> exerciseStored = SharedPreference.loadList(getContext(), "NameList", "Names");
-
-            View view2 = getLayoutInflater().inflate(R.layout.search, null);
-            ImageView imgToolBack = view2.findViewById(R.id.img_tool_back);
-            final EditText edtToolSearch = view2.findViewById(R.id.edt_tool_search);
-            ImageView imgToolMic = view2.findViewById(R.id.img_tool_mic);
-            final ListView listSearch = view2.findViewById(R.id.list_search);
-            final TextView txtEmpty = view2.findViewById(R.id.txt_empty);
-
-
-            final Dialog toolbarSearchDialog = new Dialog(getContext(), R.style.MaterialSearch);
-            toolbarSearchDialog.setContentView(view2);
-            toolbarSearchDialog.setCancelable(true);
-            toolbarSearchDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            toolbarSearchDialog.getWindow().setGravity(Gravity.BOTTOM);
-            toolbarSearchDialog.show();
-
-            toolbarSearchDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-            exerciseStored = (exerciseStored != null && exerciseStored.size() > 0) ? exerciseStored : new ArrayList<>();
-            final SearchAdapter searchAdapter = new SearchAdapter(getContext(), exerciseStored, false);
-            listSearch.setVisibility(View.VISIBLE);
-            listSearch.setAdapter(searchAdapter);
-            listSearch.setOnItemClickListener((adapterView, view3, i, l) -> {
-                AirportCode fromAirportCode = (AirportCode) adapterView.getItemAtPosition(i);
-                fromTextView.setText(fromAirportCode.getCity());
-                fromAirport = fromAirportCode.getCode();
-                listSearch.setVisibility(View.GONE);
-                toolbarSearchDialog.dismiss();
-            });
-            imgToolBack.setOnClickListener(view3 -> {
-                toolbarSearchDialog.dismiss();
-            });
-            imgToolMic.setOnClickListener(view3 -> {
-                edtToolSearch.setText("");
-            });
-            edtToolSearch.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    listSearch.setVisibility(View.VISIBLE);
-                    Gson gson = new Gson();
-                    airportCodes = SharedPreference.loadList(getContext(), "NameList", "Names");
-                    System.out.println("gson name = " + gson.toJson(airportCodes));
-                    System.out.println("nameListWith = " + airportCodes.size());
-                    listSearch.setVisibility(View.VISIBLE);
-                    searchAdapter.updateList(airportCodes, true);
+                    SharedPreference.storeList(getContext(), "NameList", "Names", airportCodes);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                List<AirportCode> popularAirportCodeList = new ArrayList<>();
+                List<AirportCode> airportCodeList = SharedPreference.loadList(getContext(), "NameList", "Names");
+                View view2 = getLayoutInflater().inflate(R.layout.search, null);
+                ImageView imgToolBack = view2.findViewById(R.id.img_tool_back);
+                final EditText edtToolSearch = view2.findViewById(R.id.edt_tool_search);
+                ImageView imgToolMic = view2.findViewById(R.id.img_tool_mic);
+                final ListView listSearch = view2.findViewById(R.id.list_search);
+                final ListView popularList_search = view2.findViewById(R.id.popularList_search);
+                final TextView txtEmpty = view2.findViewById(R.id.txt_empty);
+                final TextView popularCityText = view2.findViewById(R.id.popularCities);
+                final TextView allCityText = view2.findViewById(R.id.textView6);
+                for (AirportCode airportCode : airportCodeList) {
+                    if (airportCode.isPopular()) {
+                        popularAirportCodeList.add(airportCode);
+                    }
                 }
 
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    Gson gson = new Gson();
-                    List<AirportCode> filterList = new ArrayList<>();
-                    String json = null;
-                    boolean isNodata = false;
-                    if (charSequence.length() > 0) {
-                        for (AirportCode airportCode : airportCodes) {
-                            if (airportCode.getCity().toLowerCase().startsWith(String.valueOf(charSequence)) || airportCode.getCode().toLowerCase().startsWith(String.valueOf(charSequence))) {
-                                System.out.println("airportCode = " + airportCode.getCode());
-                                System.out.println("airportCode.getCity() = " + airportCode.getCity());
-                                System.out.println("airportCode.getName() = " + airportCode.getName());
-                                filterList.add(airportCode);
-                                listSearch.setVisibility(View.VISIBLE);
-                                searchAdapter.updateList(filterList, true);
-                                isNodata = true;
-                            }
-                        }
-                        if (!isNodata) {
-                            listSearch.setVisibility(View.GONE);
-                            txtEmpty.setVisibility(View.VISIBLE);
-                            txtEmpty.setText("No data found");
-                        }
+                final Dialog toolbarSearchDialog = new Dialog(getContext(), R.style.MaterialSearch);
+                toolbarSearchDialog.setContentView(view2);
+                toolbarSearchDialog.setCancelable(false);
+                toolbarSearchDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                toolbarSearchDialog.getWindow().setGravity(Gravity.BOTTOM);
+                toolbarSearchDialog.show();
+
+                toolbarSearchDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                airportCodeList = (airportCodeList != null && airportCodeList.size() > 0) ? airportCodeList : new ArrayList<>();
+                popularList_search.setVisibility(View.VISIBLE);
+                listSearch.setVisibility(View.GONE);
+                final SearchAdapter searchAdapter = new SearchAdapter(getContext(), airportCodeList, false);
+                final SearchAdapter popularSearchAdapter1 = new SearchAdapter(getContext(), popularAirportCodeList, false);
+                popularList_search.setAdapter(popularSearchAdapter1);
+                listSearch.setAdapter(searchAdapter);
+                listSearch.setOnItemClickListener((adapterView, view4, i, l) -> {
+                    AirportCode fromAirportCode = (AirportCode) adapterView.getItemAtPosition(i);
+                    if (fromAirportCode.getCountry().equalsIgnoreCase("India")) {
+                        type = "Domestic";
                     } else {
-                        listSearch.setVisibility(View.GONE);
-                        txtEmpty.setVisibility(View.GONE);
+                        type = "International";
+                    }
+                    fromAirportCity = fromAirportCode.getCity();
+                    fromCityTextView.setText(fromAirportCity);
+                    fromTextView.setText(fromAirportCode.getCitycode());
+                    fromAirport = fromAirportCode.getCitycode();
+                    listSearch.setVisibility(View.GONE);
+                    toolbarSearchDialog.dismiss();
+                    isDialogOpen = false;
+                });
+                popularList_search.setOnItemClickListener((adapterView, view4, i, l) -> {
+                    AirportCode fromAirportCode = (AirportCode) adapterView.getItemAtPosition(i);
+                    if (fromAirportCode.getCountry().equalsIgnoreCase("India")) {
+                        type = "Domestic";
+                    } else {
+                        type = "International";
+                    }
+                    fromAirportCity = fromAirportCode.getCity();
+                    fromCityTextView.setText(fromAirportCity);
+                    fromTextView.setText(fromAirportCode.getCitycode());
+                    fromAirport = fromAirportCode.getCitycode();
+                    popularList_search.setVisibility(View.GONE);
+                    toolbarSearchDialog.dismiss();
+                    isDialogOpen = false;
+                });
+                imgToolBack.setOnClickListener(view3 -> {
+                    toolbarSearchDialog.dismiss();
+                    isDialogOpen = false;
+                });
+                imgToolMic.setOnClickListener(view3 -> {
+                    edtToolSearch.setText("");
+                });
+                edtToolSearch.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        Gson gson = new Gson();
+                        airportCodes = SharedPreference.loadList(getContext(), "NameList", "Names");
+                        searchAdapter.updateList(airportCodes, true);
                     }
 
-                }
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        Gson gson = new Gson();
+                        List<AirportCode> filterList = new ArrayList<>();
+                        String json = null;
+                        boolean isNodata = false;
+                        if (charSequence.length() > 0) {
+                            for (AirportCode airportCode : airportCodes) {
+                                if (airportCode.getCity().toLowerCase().startsWith(String.valueOf(charSequence)) || airportCode.getCode().toLowerCase().startsWith(String.valueOf(charSequence))) {
+                                    filterList.add(airportCode);
+                                    allCityText.setVisibility(View.VISIBLE);
+                                    listSearch.setVisibility(View.VISIBLE);
+                                    popularList_search.setVisibility(View.GONE);
+                                    popularCityText.setVisibility(View.GONE);
+                                    searchAdapter.updateList(filterList, true);
+                                    isNodata = true;
+                                }
+                            }
+                            if (!isNodata) {
+                                listSearch.setVisibility(View.GONE);
+                                popularList_search.setVisibility(View.GONE);
+                                popularCityText.setVisibility(View.GONE);
+                                txtEmpty.setVisibility(View.VISIBLE);
+                                txtEmpty.setText("No data found");
+                            }
+                        } else {
+                            listSearch.setVisibility(View.GONE);
+                            popularList_search.setVisibility(View.GONE);
+                            popularCityText.setVisibility(View.GONE);
+                            txtEmpty.setVisibility(View.GONE);
+                        }
 
-                @Override
-                public void afterTextChanged(Editable editable) {
+                    }
 
-                }
-            });
+                    @Override
+                    public void afterTextChanged(Editable editable) {
 
+                    }
+                });
+
+            }
         });
         toTextView.setOnClickListener(view2 -> {
-            Gson gson = new Gson();
-            String json = null;
-            try {
-                InputStream is = getContext().getAssets().open("airportcodes.json");
-                int size = is.available();
-                byte[] buffer = new byte[size];
-                is.read(buffer);
-                is.close();
-                json = new String(buffer, "UTF-8");
-                airportCodes = gson.fromJson(json, new TypeToken<List<AirportCode>>() {
-                }.getType());
-                SharedPreference.storeList(getContext(), "NameList", "Names", airportCodes);
-                final SearchAdapter searchAdapter = new SearchAdapter(getContext(), airportCodes, false);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-            List<AirportCode> exerciseStored = SharedPreference.loadList(getContext(), "NameList", "Names");
-
-            View view3 = getLayoutInflater().inflate(R.layout.search, null);
-            ImageView imgToolBack = view3.findViewById(R.id.img_tool_back);
-            final EditText edtToolSearch = view3.findViewById(R.id.edt_tool_search);
-            ImageView imgToolMic = view3.findViewById(R.id.img_tool_mic);
-            final ListView listSearch = view3.findViewById(R.id.list_search);
-            final TextView txtEmpty = view3.findViewById(R.id.txt_empty);
-
-
-            final Dialog toolbarSearchDialog = new Dialog(getContext(), R.style.MaterialSearch);
-            toolbarSearchDialog.setContentView(view3);
-            toolbarSearchDialog.setCancelable(true);
-            toolbarSearchDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            toolbarSearchDialog.getWindow().setGravity(Gravity.BOTTOM);
-            toolbarSearchDialog.show();
-
-            toolbarSearchDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-            exerciseStored = (exerciseStored != null && exerciseStored.size() > 0) ? exerciseStored : new ArrayList<>();
-            final SearchAdapter searchAdapter = new SearchAdapter(getContext(), exerciseStored, false);
-            listSearch.setVisibility(View.VISIBLE);
-            listSearch.setAdapter(searchAdapter);
-            listSearch.setOnItemClickListener((adapterView, view4, i, l) -> {
-                AirportCode fromAirportCode = (AirportCode) adapterView.getItemAtPosition(i);
-                toTextView.setText(fromAirportCode.getCity());
-                toAirport = fromAirportCode.getCode();
-                listSearch.setVisibility(View.GONE);
-                toolbarSearchDialog.dismiss();
-            });
-            imgToolBack.setOnClickListener(view4 -> {
-                toolbarSearchDialog.dismiss();
-            });
-            imgToolMic.setOnClickListener(view4 -> {
-                edtToolSearch.setText("");
-            });
-            edtToolSearch.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    listSearch.setVisibility(View.VISIBLE);
-                    Gson gson = new Gson();
-                    airportCodes = SharedPreference.loadList(getContext(), "NameList", "Names");
-                    System.out.println("gson name = " + gson.toJson(airportCodes));
-                    System.out.println("nameListWith = " + airportCodes.size());
-                    listSearch.setVisibility(View.VISIBLE);
-                    searchAdapter.updateList(airportCodes, true);
+            if (!isDialogOpen) {
+                isDialogOpen = true;
+                Gson gson = new Gson();
+                String json = null;
+                try {
+                    InputStream is = getContext().getAssets().open("airportcodes.json");
+                    int size = is.available();
+                    byte[] buffer = new byte[size];
+                    is.read(buffer);
+                    is.close();
+                    json = new String(buffer, StandardCharsets.UTF_8);
+                    airportCodes = gson.fromJson(json, new TypeToken<List<AirportCode>>() {
+                    }.getType());
+                    List<AirportCode> popularAirportCodeList = new ArrayList<>();
+                    View view3 = getLayoutInflater().inflate(R.layout.search, null);
+                    SharedPreference.storeList(getContext(), "NameList", "Names", airportCodes);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
 
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    Gson gson = new Gson();
-                    List<AirportCode> filterList = new ArrayList<>();
-                    String json = null;
-                    boolean isNodata = false;
-                    if (charSequence.length() > 0) {
-                        for (AirportCode airportCode : airportCodes) {
-                            if (airportCode.getCity().toLowerCase().startsWith(String.valueOf(charSequence)) || airportCode.getCode().toLowerCase().startsWith(String.valueOf(charSequence))) {
-                                System.out.println("airportCode = " + airportCode.getCode());
-                                System.out.println("airportCode.getCity() = " + airportCode.getCity());
-                                System.out.println("airportCode.getName() = " + airportCode.getName());
-                                filterList.add(airportCode);
-                                listSearch.setVisibility(View.VISIBLE);
-                                searchAdapter.updateList(filterList, true);
-                                isNodata = true;
-                            }
+
+                List<AirportCode> popularAirportCodeList = new ArrayList<>();
+                List<AirportCode> airportCodeList = SharedPreference.loadList(getContext(), "NameList", "Names");
+                View view3 = getLayoutInflater().inflate(R.layout.search, null);
+                ImageView imgToolBack = view3.findViewById(R.id.img_tool_back);
+                final EditText edtToolSearch = view3.findViewById(R.id.edt_tool_search);
+                ImageView imgToolMic = view3.findViewById(R.id.img_tool_mic);
+                final ListView listSearch = view3.findViewById(R.id.list_search);
+                final ListView popularList_search = view3.findViewById(R.id.popularList_search);
+                final TextView txtEmpty = view3.findViewById(R.id.txt_empty);
+                final TextView popularCityText = view3.findViewById(R.id.popularCities);
+                final TextView allCityText = view3.findViewById(R.id.textView6);
+                for (AirportCode airportCode : airportCodeList) {
+                    if (airportCode.isPopular()) {
+                        popularAirportCodeList.add(airportCode);
+                    }
+                }
+
+                final Dialog toolbarSearchDialog = new Dialog(getContext(), R.style.MaterialSearch);
+                toolbarSearchDialog.setContentView(view3);
+                toolbarSearchDialog.setCancelable(false);
+                toolbarSearchDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                toolbarSearchDialog.getWindow().setGravity(Gravity.BOTTOM);
+                toolbarSearchDialog.show();
+
+                toolbarSearchDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                airportCodeList = (airportCodeList != null && airportCodeList.size() > 0) ? airportCodeList : new ArrayList<>();
+                popularList_search.setVisibility(View.VISIBLE);
+                listSearch.setVisibility(View.GONE);
+                allCityText.setVisibility(View.GONE);
+                final SearchAdapter searchAdapter = new SearchAdapter(getContext(), airportCodeList, false);
+                final SearchAdapter popularSearchAdapter1 = new SearchAdapter(getContext(), popularAirportCodeList, false);
+                popularList_search.setAdapter(popularSearchAdapter1);
+                listSearch.setAdapter(searchAdapter);
+                listSearch.setOnItemClickListener((adapterView, view4, i, l) -> {
+                    AirportCode fromAirportCode = (AirportCode) adapterView.getItemAtPosition(i);
+                    if (!type.matches("International")) {
+                        if (fromAirportCode.getCountry().equalsIgnoreCase("India")) {
+                            type = "Domestic";
+                        } else {
+                            type = "International";
                         }
-                        if (!isNodata) {
-                            listSearch.setVisibility(View.GONE);
-                            txtEmpty.setVisibility(View.VISIBLE);
-                            txtEmpty.setText("No data found");
-                        }
+                    }
+                    toAirportCity = fromAirportCode.getCity();
+                    toCityTextView.setText(toAirportCity);
+                    toTextView.setText(fromAirportCode.getCitycode());
+                    toAirport = fromAirportCode.getCitycode();
+                    listSearch.setVisibility(View.GONE);
+                    toolbarSearchDialog.dismiss();
+                    isDialogOpen = false;
+                });
+                popularList_search.setOnItemClickListener((adapterView, view4, i, l) -> {
+                    AirportCode fromAirportCode = (AirportCode) adapterView.getItemAtPosition(i);
+                    if (fromAirportCode.getCountry().equalsIgnoreCase("India")) {
+                        type = "Domestic";
                     } else {
-                        listSearch.setVisibility(View.GONE);
-                        txtEmpty.setVisibility(View.GONE);
+                        type = "International";
+                    }
+                    toAirportCity = fromAirportCode.getCity();
+                    toCityTextView.setText(toAirportCity);
+                    toTextView.setText(fromAirportCode.getCitycode());
+                    toAirport = fromAirportCode.getCitycode();
+                    listSearch.setVisibility(View.GONE);
+                    toolbarSearchDialog.dismiss();
+                    isDialogOpen = false;
+                });
+                imgToolBack.setOnClickListener(view4 -> {
+                    toolbarSearchDialog.dismiss();
+                    isDialogOpen = false;
+                });
+                imgToolMic.setOnClickListener(view4 -> {
+                    edtToolSearch.setText("");
+                });
+                edtToolSearch.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        Gson gson = new Gson();
+                        airportCodes = SharedPreference.loadList(getContext(), "NameList", "Names");
+                        searchAdapter.updateList(airportCodes, true);
                     }
 
-                }
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        Gson gson = new Gson();
+                        List<AirportCode> filterList = new ArrayList<>();
+                        String json = null;
+                        boolean isNodata = false;
+                        if (charSequence.length() > 0) {
+                            for (AirportCode airportCode : airportCodes) {
+                                if (airportCode.getCity().toLowerCase().startsWith(String.valueOf(charSequence)) || airportCode.getCode().toLowerCase().startsWith(String.valueOf(charSequence))) {
+                                    filterList.add(airportCode);
+                                    allCityText.setVisibility(View.VISIBLE);
+                                    listSearch.setVisibility(View.VISIBLE);
+                                    popularList_search.setVisibility(View.GONE);
+                                    popularCityText.setVisibility(View.GONE);
+                                    searchAdapter.updateList(filterList, true);
+                                    isNodata = true;
+                                }
+                            }
+                            if (!isNodata) {
+                                listSearch.setVisibility(View.GONE);
+                                popularList_search.setVisibility(View.GONE);
+                                popularCityText.setVisibility(View.GONE);
+                                txtEmpty.setVisibility(View.VISIBLE);
+                                txtEmpty.setText("No data found");
+                            }
+                        } else {
+                            listSearch.setVisibility(View.GONE);
+                            popularList_search.setVisibility(View.GONE);
+                            popularCityText.setVisibility(View.GONE);
+                            txtEmpty.setVisibility(View.GONE);
+                        }
 
-                @Override
-                public void afterTextChanged(Editable editable) {
+                    }
 
-                }
-            });
+                    @Override
+                    public void afterTextChanged(Editable editable) {
 
+                    }
+                });
+            }
+        });
+        swapImageView.setOnClickListener(view1 -> {
+            String fromCity = fromCityTextView.getText().toString();
+            String toCity = toCityTextView.getText().toString();
+            String from = fromTextView.getText().toString();
+            String to = toTextView.getText().toString();
+            fromTextView.setText(to);
+            fromCityTextView.setText(toCity);
+            toTextView.setText(from);
+            toCityTextView.setText(fromCity);
+            String temp = fromAirport;
+            fromAirport = toAirport;
+            toAirport = temp;
+            String temp1 = fromAirportCity;
+            fromAirportCity = toAirportCity;
+            toAirportCity = temp1;
+//            Toast.makeText(getContext(), fromAirport + "-" + toAirport, Toast.LENGTH_SHORT).show();
         });
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -328,7 +493,14 @@ public class HomeFragment extends Fragment {
             }
         };
         whenTextView.setOnClickListener(view2 -> {
-            setupRangePickerDialog(oneWay);
+            if (!isDialogOpen) {
+                isDialogOpen = true;
+                try {
+                    setupRangePickerDialog(oneWay);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 //            View view1 = getLayoutInflater().inflate(R.layout.calendar, null);
 //            calendarView = view1.findViewById(R.id.calendarView);
 //            Calendar calendar = Calendar.getInstance();
@@ -435,6 +607,17 @@ public class HomeFragment extends Fragment {
 //            toolbarSearchDialog.show();
 ////            toolbarSearchDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         });
+        whenReturnTextView.setOnClickListener(view1 -> {
+            if (!isDialogOpen) {
+                isDialogOpen = true;
+                try {
+                    setupRangePickerDialog(oneWay);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+/*
         passenger.setOnClickListener(view2 -> {
             View view1 = getLayoutInflater().inflate(R.layout.personlayout, null);
             RadioGroup adultGroup, childrenGroup, infantGroup, classGroup;
@@ -875,6 +1058,17 @@ public class HomeFragment extends Fragment {
                 toolbarSearchDialog.dismiss();
             });
         });
+*/
+        TC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isDialogOpen) {
+                    isDialogOpen = true;
+                    View v = View.inflate(getContext(), R.layout.travellers_and_class_layout, null);
+                    showDialogTC(v);
+                }
+            }
+        });
         search.setOnClickListener(view2 -> {
             String fa = fromAirport;
             String ta = toAirport;
@@ -913,7 +1107,7 @@ public class HomeFragment extends Fragment {
                         System.out.println("gson.toJson(jsonObject) = " + gson.toJson(jsonObject1));
 
 
-                        startActivity(new Intent(getContext(), FlightListActivity.class).putExtra("json", String.valueOf(jsonObject1)));
+                        startActivity(new Intent(getContext(), FlightListActivity.class).putExtra("json", String.valueOf(jsonObject1)).putExtra("type", type).putExtra("fromAirportCity", fromAirportCity).putExtra("toAirportCity", toAirportCity));
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -935,19 +1129,346 @@ public class HomeFragment extends Fragment {
                         }.getType());
                         System.out.println("gson.toJson(jsonObject) = " + gson.toJson(jsonObject));
                         System.out.println("gson.toJson(jsonObject) = " + gson.toJson(jsonObject1));
-
-
-                        startActivity(new Intent(getContext(), ReturnFlightsActivity.class).putExtra("json", String.valueOf(jsonObject1)));
+                        if (type.equalsIgnoreCase("Domestic")) {
+                            startActivity(new Intent(getContext(), ReturnFlightsActivity.class).putExtra("json", String.valueOf(jsonObject1)).putExtra("type", type).putExtra("fromAirportCity", fromAirportCity).putExtra("toAirportCity", toAirportCity));
+                        } else if (type.equalsIgnoreCase("International")) {
+                            startActivity(new Intent(getContext(), InternationalReturnFragment.class).putExtra("json", String.valueOf(jsonObject1)).putExtra("type", type).putExtra("fromAirportCity", fromAirportCity).putExtra("toAirportCity", toAirportCity));
+                        }
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
                 }
             }
         });
+
         return view;
     }
 
-    private void setupRangePickerDialog(boolean oneWay) {
+    private void showDialogTC(View v) {
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(v);
+
+        ImageView closeDialog = dialog.findViewById(R.id.closeDialog);
+        Button done = dialog.findViewById(R.id.DoneTC);
+
+        TextView AdultAdd, CAdd, IAdd, AdultReduce, CReduce, IReduce;
+        TextView AdultCount, ChildrenCount, InfantCount;
+
+        AdultAdd = dialog.findViewById(R.id.AaddBTN);
+        AdultReduce = dialog.findViewById(R.id.ASubBTN);
+        AdultCount = dialog.findViewById(R.id.AdultCount);
+        CAdd = dialog.findViewById(R.id.CAddBTN);
+        CReduce = dialog.findViewById(R.id.CSubBTN);
+        ChildrenCount = dialog.findViewById(R.id.ChildrenCount);
+        IAdd = dialog.findViewById(R.id.IAddBTN);
+        IReduce = dialog.findViewById(R.id.ISubBTN);
+        InfantCount = dialog.findViewById(R.id.InfantsCount);
+
+        // CLASS
+        RadioButton eco, priEco, Business, firstClassRadioButton;
+        eco = dialog.findViewById(R.id.economyClass);
+        priEco = dialog.findViewById(R.id.premiumEconomy);
+        Business = dialog.findViewById(R.id.business);
+        firstClassRadioButton = dialog.findViewById(R.id.firstclass);
+
+        RadioGroup classT = dialog.findViewById(R.id.ClassRadioG);
+        eco.setChecked(true);
+        classTextView.setText(eco.getText().toString());
+        Class = "ECONOMY";
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+
+        final int[] adult = {Integer.parseInt(AdultCount.getText().toString())};
+        final int[] children = {Integer.parseInt(ChildrenCount.getText().toString())};
+        final int[] infant = {Integer.parseInt(InfantCount.getText().toString())};
+
+        classT.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (radioGroup.getCheckedRadioButtonId()) {
+                    case R.id.economyClass:
+                        Class = "ECONOMY";
+                        classTextView.setText(eco.getText().toString());
+                        break;
+
+                    case R.id.premiumEconomy:
+                        Class = "PREMIUM_ECONOMY";
+                        classTextView.setText(priEco.getText().toString());
+                        break;
+                    case R.id.business:
+                        Class = "BUSINESS";
+                        classTextView.setText(Business.getText().toString());
+                        break;
+                    case R.id.firstclass:
+                        Class = "FIRST";
+                        classTextView.setText(firstClassRadioButton.getText().toString());
+                        break;
+                }
+            }
+        });
+
+        AdultAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adult[0] = adult[0] + 1;
+                int childAdultCombine = 9 - children[0];
+
+                if (adult[0] > 9 || adult[0] > childAdultCombine) {
+                    AdultAdd.setEnabled(false);
+                    CAdd.setEnabled(false);
+                } else if (infant[0] < adult[0]) {
+                    IAdd.setEnabled(true);
+                }
+                AdultReduce.setEnabled(true);
+                AdultCount.setText(String.valueOf(adult[0]));
+            }
+        });
+        CAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                children[0] = children[0] + 1;
+                int childAdultCombine2 = 9 - adult[0];
+
+                if (children[0] >= childAdultCombine2) {
+                    CAdd.setEnabled(false);
+                } else if (children[0] > 0) {
+                    CReduce.setEnabled(true);
+                } else {
+                    CAdd.setEnabled(true);
+                }
+                ChildrenCount.setText(String.valueOf(children[0]));
+            }
+        });
+        IAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                infant[0] = infant[0] + 1;
+                Toast.makeText(getContext(), String.valueOf(adult[0]), Toast.LENGTH_SHORT).show();
+                if (infant[0] == adult[0]) {
+                    IAdd.setEnabled(false);
+                    IReduce.setEnabled(true);
+                } else {
+                    IReduce.setEnabled(true);
+                    IAdd.setEnabled(true);
+                }
+                InfantCount.setText(String.valueOf(infant[0]));
+            }
+        });
+
+        AdultReduce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int childAdultCombine2 = 9 - children[0];
+                adult[0] = adult[0] - 1;
+
+                if (adult[0] <= infant[0]) {
+                    infant[0] = adult[0];
+                    if (adult[0] <= 1) {
+                        AdultReduce.setEnabled(false);
+                    }
+                    InfantCount.setText(String.valueOf(infant[0]));
+                    IAdd.setEnabled(false);
+                } else if (infant[0] > 0) {
+                    IReduce.setEnabled(true);
+                } else if (adult[0] < childAdultCombine2) {
+                    AdultAdd.setEnabled(true);
+                    CAdd.setEnabled(true);
+                }
+
+                AdultCount.setText(String.valueOf(adult[0]));
+            }
+        });
+        CReduce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                children[0] = children[0] - 1;
+                int childAdultCombine2 = 9 - adult[0];
+                if (children[0] == 0) {
+                    CReduce.setEnabled(false);
+                } else if (children[0] < childAdultCombine2) {
+                    CAdd.setEnabled(true);
+                    AdultAdd.setEnabled(true);
+                } else {
+                    CReduce.setEnabled(true);
+                }
+                ChildrenCount.setText(String.valueOf(children[0]));
+
+            }
+        });
+        IReduce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                infant[0] = infant[0] - 1;
+                if (infant[0] < 1) {
+                    IReduce.setEnabled(false);
+                    IAdd.setEnabled(true);
+                } else if (infant[0] <= adult[0]) {
+                    IAdd.setEnabled(true);
+                } else {
+                    IReduce.setEnabled(true);
+                }
+                InfantCount.setText(String.valueOf(infant[0]));
+            }
+        });
+
+        if (adult[0] == 1) {
+            AdultAdd.setEnabled(true);
+        } else if (children[0] == 0) {
+            CAdd.setEnabled(true);
+        } else if (infant[0] < adult[0]) {
+            IAdd.setEnabled(true);
+        }
+
+
+//        Toast.makeText(getContext(),""+adult[0], Toast.LENGTH_SHORT).show();
+
+
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Adult = AdultCount.getText().toString();
+                Children = ChildrenCount.getText().toString();
+                Infant = InfantCount.getText().toString();
+                int adult = Integer.parseInt(Adult);
+                int child = Integer.parseInt(Children);
+                int infant = Integer.parseInt(Infant);
+                int total = adult + child + infant;
+                if (total > 1) {
+                    personTextView.setText(total + " Travellers");
+                } else {
+                    personTextView.setText(total + " Traveller");
+                }
+                System.out.println("Class = " + Class);
+//                classTextView.setText(Class);
+//                travellersDetailsLists.add(new TravellersDetailsList(AdultsCounts, childrenCounts, infantsCounts));
+//                AdultsCounts.add(Integer.parseInt(AdultCount.getText().toString()));
+//                childrenCounts.add((Integer.parseInt(ChildrenCount.getText().toString())));
+//                infantsCounts.add((Integer.parseInt(InfantCount.getText().toString())));
+                dialog.cancel();
+                isDialogOpen = false;
+            }
+        });
+        closeDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+                isDialogOpen = false;
+            }
+        });
+    }
+
+    private void showDialog(View v, List<AirportCode> airportCodeList, List<AirportCode> popularAirportCodeList, TextView fromTextView, TextView fromCityTextView, String fromAirport) {
+
+        Gson gson = new Gson();
+        ImageView imgToolBack = v.findViewById(R.id.img_tool_back);
+        final EditText edtToolSearch = v.findViewById(R.id.edt_tool_search);
+        ImageView imgToolMic = v.findViewById(R.id.img_tool_mic);
+        final ListView listSearch = v.findViewById(R.id.list_search);
+        final RecyclerView popularList_search = v.findViewById(R.id.popularList_search);
+        final TextView txtEmpty = v.findViewById(R.id.txt_empty);
+        for (AirportCode airportCode : airportCodeList) {
+            if (airportCode.isPopular()) {
+                popularAirportCodeList.add(airportCode);
+            }
+        }
+
+        final Dialog toolbarSearchDialog = new Dialog(getContext(), R.style.MaterialSearch);
+        toolbarSearchDialog.setContentView(v);
+        toolbarSearchDialog.setCancelable(true);
+        toolbarSearchDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        toolbarSearchDialog.getWindow().setGravity(Gravity.BOTTOM);
+        toolbarSearchDialog.show();
+
+        toolbarSearchDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        airportCodeList = (airportCodeList != null && airportCodeList.size() > 0) ? airportCodeList : new ArrayList<>();
+        System.out.println("gson = " + gson.toJson(airportCodeList));
+        System.out.println("gson = " + gson.toJson(popularAirportCodeList));
+        ArrivalCityAdapter popularArrivalCityAdapter = new ArrivalCityAdapter(popularAirportCodeList, getContext(), toolbarSearchDialog, fromCityTextView, fromTextView, fromAirport, type, popularList_search);
+        popularList_search.setVisibility(View.VISIBLE);
+        listSearch.setVisibility(View.VISIBLE);
+        final SearchAdapter searchAdapter = new SearchAdapter(getContext(), airportCodeList, false);
+
+        popularList_search.setLayoutManager(new LinearLayoutManager(getContext()));
+        popularList_search.setAdapter(popularArrivalCityAdapter);
+        listSearch.setAdapter(searchAdapter);
+        listSearch.setOnItemClickListener((adapterView, view4, i, l) -> {
+            AirportCode fromAirportCode = (AirportCode) adapterView.getItemAtPosition(i);
+            if (!type.matches("International")) {
+                if (fromAirportCode.getCountry().equalsIgnoreCase("India")) {
+                    type = "Domestic";
+                } else {
+                    type = "International";
+                }
+            }
+            fromTextView.setText(fromAirportCode.getCity());
+            listSearch.setVisibility(View.GONE);
+            toolbarSearchDialog.dismiss();
+        });
+        imgToolBack.setOnClickListener(view3 -> {
+            toolbarSearchDialog.dismiss();
+        });
+        imgToolMic.setOnClickListener(view3 -> {
+            edtToolSearch.setText("");
+        });
+        edtToolSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                listSearch.setVisibility(View.VISIBLE);
+                Gson gson = new Gson();
+                airportCodes = SharedPreference.loadList(getContext(), "NameList", "Names");
+                System.out.println("gson name = " + gson.toJson(airportCodes));
+                System.out.println("nameListWith = " + airportCodes.size());
+                listSearch.setVisibility(View.VISIBLE);
+                searchAdapter.updateList(airportCodes, true);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Gson gson = new Gson();
+                List<AirportCode> filterList = new ArrayList<>();
+                String json = null;
+                boolean isNodata = false;
+                if (charSequence.length() > 0) {
+                    for (AirportCode airportCode : airportCodes) {
+                        if (airportCode.getCity().toLowerCase().startsWith(String.valueOf(charSequence)) || airportCode.getCode().toLowerCase().startsWith(String.valueOf(charSequence))) {
+                            System.out.println("airportCode = " + airportCode.getCode());
+                            System.out.println("airportCode.getCity() = " + airportCode.getCity());
+                            System.out.println("airportCode.getName() = " + airportCode.getName());
+                            filterList.add(airportCode);
+                            listSearch.setVisibility(View.VISIBLE);
+                            popularList_search.setVisibility(View.GONE);
+                            searchAdapter.updateList(filterList, true);
+                            isNodata = true;
+                        }
+                    }
+                    if (!isNodata) {
+                        listSearch.setVisibility(View.GONE);
+                        popularList_search.setVisibility(View.GONE);
+                        txtEmpty.setVisibility(View.VISIBLE);
+                        txtEmpty.setText("No data found");
+                    }
+                } else {
+                    listSearch.setVisibility(View.GONE);
+                    popularList_search.setVisibility(View.GONE);
+                    txtEmpty.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+    }
+
+    private void setupRangePickerDialog(boolean oneWay) throws ParseException {
         if (oneWay) {
             MaterialDatePicker.Builder<Long> builder =
                     MaterialDatePicker.Builder.datePicker();
@@ -959,16 +1480,39 @@ public class HomeFragment extends Fragment {
                 public void onPositiveButtonClick(Long selection) {
                     Date date = new Date(selection);
                     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM");
+                    SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMM yy");
                     travelDate = sdf1.format(date);
                     whenTextView.setText(sdf.format(date));
+                    isDialogOpen = false;
                 }
+            });
+            picker.addOnCancelListener(dialogInterface -> {
+                isDialogOpen = false;
+            });
+            picker.addOnNegativeButtonClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    isDialogOpen = false;
+                }
+            });
+            picker.addOnDismissListener(dialogInterface -> {
+                isDialogOpen = false;
             });
             picker.show(getChildFragmentManager(), picker.toString());
         } else {
             MaterialDatePicker.Builder<Pair<Long, Long>> builderRange =
                     MaterialDatePicker.Builder.dateRangePicker();
             builderRange.setCalendarConstraints(limitRange().build());
+          /*  SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf1.parse(travelDate);
+            Date date1 = sdf1.parse(returnTravelDate);
+            System.out.println("date1 = " + date1);
+            System.out.println("date1 = " + date1.getTime());
+            System.out.println("date = " + date);
+            System.out.println("date = " + date.getTime());
+            Pair<Long, Long> selection =new Pair<>(date.getTime(),date1.getTime());
+            System.out.println("selection = " + selection);*/
+
             MaterialDatePicker<Pair<Long, Long>> pickerRange = builderRange.build();
             pickerRange.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
                 @Override
@@ -979,12 +1523,15 @@ public class HomeFragment extends Fragment {
                     Date date2 = new Date(selection.second);
                     System.out.println("date = " + date1);
                     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-                    SimpleDateFormat sdf2 = new SimpleDateFormat("dd MMM");
+                    SimpleDateFormat sdf2 = new SimpleDateFormat("E, dd MMM yy");
                     System.out.println("sdf1.format(date) = " + sdf1.format(date1));
                     travelDate = sdf1.format(date1);
                     returnTravelDate = sdf1.format(date2);
-                    String date = sdf2.format(date1) + " - " + sdf2.format(date2);
+                    String date = sdf2.format(date1);
+                    String retDate = sdf2.format(date2);
                     whenTextView.setText(date);
+                    whenReturnTextView.setText(retDate);
+                    isDialogOpen = false;
                 }
             });
             pickerRange.show(getChildFragmentManager(), pickerRange.toString());
@@ -1020,8 +1567,8 @@ public class HomeFragment extends Fragment {
     }
 
     public static class RangeValidator implements CalendarConstraints.DateValidator {
-        private long minDate;
-        private long maxDate;
+        private final long minDate;
+        private final long maxDate;
 
         public RangeValidator(long minDate, long maxDate) {
             this.minDate = minDate;

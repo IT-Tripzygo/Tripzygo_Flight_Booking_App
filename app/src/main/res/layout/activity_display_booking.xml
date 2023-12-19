@@ -2,128 +2,79 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".DisplayBookingActivity">
-
-        <TextView
-            android:id="@+id/DepartureCityText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/arrowImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_toEndOf="@id/DepartureCityText"
-            android:src="@drawable/baseline_arrow_forward_24" />
-
-        <TextView
-            android:id="@+id/ArrivalCityText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@id/arrowImage"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/classText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/DepartureCityText"
-            android:layout_marginStart="10dp"
-            android:elevation="5dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/darkGrey"
-            android:textSize="11sp" />
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:layout_below="@id/DepartureCityText"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="6dp"
-            android:layout_toEndOf="@id/classText"
-            android:background="@drawable/viewback1"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/stopText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/DepartureCityText"
-            android:layout_toEndOf="@id/view2"
-            android:elevation="5dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/darkGrey"
-            android:textSize="11sp" />
-
-        <View
-            android:id="@+id/view3"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:layout_below="@id/DepartureCityText"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="6dp"
-            android:layout_toEndOf="@id/stopText"
-            android:background="@drawable/viewback1"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/timeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ArrivalCityText"
-            android:layout_toEndOf="@id/view3"
-            android:elevation="5dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/darkGrey"
-            android:textSize="11sp" />
-
-        <View
-            android:id="@+id/viewsept"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_below="@id/timeText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/viewsepertor" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/flightDetailRecycler"
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarDisplay"
+            style="@style/Widget.MaterialComponents.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/viewsept"
-            tools:itemCount="1"
-            tools:listitem="@layout/flight_booking_detail_layout" />
+            android:background="@color/blackLight"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:popupTheme="@style/PopupMenuStyle"/>
+        <LinearLayout
+            android:id="@+id/relativeInvoiceAndPdf"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_below="@id/toolbarDisplay"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/eTicketBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:drawableTint="@color/royalBlue"
+                    android:drawableStart="@drawable/ticket_solid"
+                    android:paddingVertical="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_10"
+                    android:paddingEnd="@dimen/padding_20"
+                    android:text="E-Ticket"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/blackLight" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/invoiceBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_10"
+                    android:paddingEnd="@dimen/padding_20"
+                    android:text="Invoice"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:drawableTint="@color/royalBlue"
+                    android:drawableStart="@drawable/file_invoice_solid"
+                    android:textColor="@color/blackLight" />
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/returnFLightLayoutBookingDisplay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:layout_below="@id/flightDetailRecycler">
+            android:layout_below="@id/relativeInvoiceAndPdf">
+
 
             <TextView
-                android:id="@+id/returnDepartureCityText"
+                android:id="@+id/DepartureCityText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -134,29 +85,29 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/returnarrowImage"
+                android:id="@+id/arrowImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_toEndOf="@id/returnDepartureCityText"
+                android:layout_toEndOf="@id/DepartureCityText"
                 android:src="@drawable/baseline_arrow_forward_24" />
 
             <TextView
-                android:id="@+id/returnArrivalCityText"
+                android:id="@+id/ArrivalCityText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/returnarrowImage"
+                android:layout_toEndOf="@id/arrowImage"
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/returnclassText"
+                android:id="@+id/classText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/returnDepartureCityText"
+                android:layout_below="@id/DepartureCityText"
                 android:layout_marginStart="10dp"
                 android:elevation="5dp"
                 android:paddingStart="5dp"
@@ -165,22 +116,22 @@
                 android:textSize="11sp" />
 
             <View
-                android:id="@+id/returnview2"
+                android:id="@+id/view2"
                 android:layout_width="5dp"
                 android:layout_height="5dp"
-                android:layout_below="@id/returnDepartureCityText"
+                android:layout_below="@id/DepartureCityText"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="6dp"
-                android:layout_toRightOf="@id/returnclassText"
+                android:layout_toEndOf="@id/classText"
                 android:background="@drawable/viewback1"
                 android:padding="5dp" />
 
             <TextView
-                android:id="@+id/returnstopText"
+                android:id="@+id/stopText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/returnDepartureCityText"
-                android:layout_toEndOf="@id/returnview2"
+                android:layout_below="@id/DepartureCityText"
+                android:layout_toEndOf="@id/view2"
                 android:elevation="5dp"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
@@ -188,22 +139,22 @@
                 android:textSize="11sp" />
 
             <View
-                android:id="@+id/returnview3"
+                android:id="@+id/view3"
                 android:layout_width="5dp"
                 android:layout_height="5dp"
-                android:layout_below="@id/returnDepartureCityText"
+                android:layout_below="@id/DepartureCityText"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="6dp"
-                android:layout_toEndOf="@id/returnstopText"
+                android:layout_toEndOf="@id/stopText"
                 android:background="@drawable/viewback1"
                 android:padding="5dp" />
 
             <TextView
-                android:id="@+id/returntimeText"
+                android:id="@+id/timeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/returnArrivalCityText"
-                android:layout_toEndOf="@id/returnview3"
+                android:layout_below="@id/ArrivalCityText"
+                android:layout_toEndOf="@id/view3"
                 android:elevation="5dp"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
@@ -211,152 +162,267 @@
                 android:textSize="11sp" />
 
             <View
-                android:id="@+id/returnviewsept"
+                android:id="@+id/viewsept"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:layout_below="@id/returntimeText"
-                android:layout_marginStart="15dp"
+                android:layout_below="@id/timeText"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/viewsepertor" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/returnflightDetailRecycler"
+                android:id="@+id/flightDetailRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/returnviewsept"
+                android:layout_below="@id/viewsept"
                 tools:itemCount="1"
                 tools:listitem="@layout/flight_booking_detail_layout" />
+
+            <RelativeLayout
+                android:id="@+id/returnFLightLayoutBookingDisplay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/flightDetailRecycler"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/returnDepartureCityText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/returnarrowImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_toEndOf="@id/returnDepartureCityText"
+                    android:src="@drawable/baseline_arrow_forward_24" />
+
+                <TextView
+                    android:id="@+id/returnArrivalCityText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/returnarrowImage"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/returnclassText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/returnDepartureCityText"
+                    android:layout_marginStart="10dp"
+                    android:elevation="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:textColor="@color/darkGrey"
+                    android:textSize="11sp" />
+
+                <View
+                    android:id="@+id/returnview2"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_below="@id/returnDepartureCityText"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@id/returnclassText"
+                    android:background="@drawable/viewback1"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:id="@+id/returnstopText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/returnDepartureCityText"
+                    android:layout_toEndOf="@id/returnview2"
+                    android:elevation="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:textColor="@color/darkGrey"
+                    android:textSize="11sp" />
+
+                <View
+                    android:id="@+id/returnview3"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_below="@id/returnDepartureCityText"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="6dp"
+                    android:layout_toEndOf="@id/returnstopText"
+                    android:background="@drawable/viewback1"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:id="@+id/returntimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/returnArrivalCityText"
+                    android:layout_toEndOf="@id/returnview3"
+                    android:elevation="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:textColor="@color/darkGrey"
+                    android:textSize="11sp" />
+
+                <View
+                    android:id="@+id/returnviewsept"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_below="@id/returntimeText"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/viewsepertor" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/returnflightDetailRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/returnviewsept"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/flight_booking_detail_layout" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/fareSummaryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/returnFLightLayoutBookingDisplay"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="3dp"
+                android:text="Fare Summary"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/FareTypeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fareSummaryText"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="4dp"
+                android:text="Fare Type"
+                android:textColor="@color/darkGrey"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/FareType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fareSummaryText"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="4dp"
+                android:textColor="@color/forestGreen"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/BaseFareText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/FareTypeText"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="4dp"
+                android:text="Base Fare"
+                android:textColor="@color/darkGrey"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/BaseFare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/FareTypeText"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/TaxesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/BaseFareText"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="4dp"
+                android:text="Taxes &amp; Fees"
+                android:textColor="@color/darkGrey"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/Taxes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/BaseFareText"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <View
+                android:id="@+id/viewsept4"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@id/TaxesText"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/viewsepertor" />
+
+            <TextView
+                android:id="@+id/NetPayableText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewsept4"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="4dp"
+                android:text="You Paid"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/NetPayable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewsept4"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </RelativeLayout>
-        <TextView
-            android:id="@+id/fareSummaryText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/returnFLightLayoutBookingDisplay"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:padding="3dp"
-            android:text="Fare Summary"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/FareTypeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fareSummaryText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="4dp"
-            android:text="Fare Type"
-            android:textColor="@color/darkGrey"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/FareType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fareSummaryText"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="4dp"
-            android:textColor="@color/forestGreen"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/BaseFareText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/FareTypeText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="4dp"
-            android:text="Base Fare"
-            android:textColor="@color/darkGrey"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/BaseFare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/FareTypeText"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="4dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/TaxesText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/BaseFareText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="4dp"
-            android:text="Taxes &amp; Fees"
-            android:textColor="@color/darkGrey"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/Taxes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/BaseFareText"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="4dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-        <View
-            android:id="@+id/viewsept4"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_below="@id/TaxesText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/viewsepertor" />
-
-        <TextView
-            android:id="@+id/NetPayableText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/viewsept4"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="4dp"
-            android:text="You Paid"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/NetPayable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/viewsept4"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="4dp"
-            android:text="₹ 4699"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>

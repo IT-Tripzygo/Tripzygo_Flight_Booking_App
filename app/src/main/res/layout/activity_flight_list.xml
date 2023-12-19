@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     tools:context=".FlightListActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -12,82 +12,102 @@
         style="@style/Widget.MaterialComponents.Toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#6842FF"
+        android:background="@color/blackLight"
         app:navigationIcon="@drawable/baseline_arrow_back_24"
-        app:popupTheme="@style/PopupMenuStyle"
-        app:titleCentered="false"
-        app:titleTextColor="@color/white">
+        app:popupTheme="@style/PopupMenuStyle">
 
-        <LinearLayout
-            android:id="@+id/passenger"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="#4B6842FF"
-            android:elevation="5dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/DepartureAirportTextOneWay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawablePadding="15dp"
-                android:padding="5dp"
-                android:text="IDR"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <ImageView
+            <LinearLayout
+                android:id="@+id/passengerOneWay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:padding="5dp"
-                android:src="@drawable/plane_solid_white" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/ArrivalAirportTextOneWay"
+                <TextView
+                    android:id="@+id/DepartureAirportTextOneWay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="15dp"
+                    android:text="IDR"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/arrow_right_long_solid"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/ArrivalAirportTextOneWay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="15dp"
+                    android:text="DEL"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="15dp"
-                android:padding="5dp"
-                android:text="DEL"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:layout_below="@id/passengerOneWay"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="6dp"
-                android:layout_height="6dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/viewback" />
 
-            <TextView
-                android:id="@+id/datesTextOneWay"
+                <TextView
+                    android:id="@+id/datesTextOneWay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="5dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="04 Sept "
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-2dp"
+                    android:background="@drawable/viewback" />
+
+                <TextView
+                    android:id="@+id/passengerTextOneWay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="1 Traveller"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/editSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
                 android:elevation="5dp"
                 android:padding="5dp"
-                android:text="04 Sept "
+                android:src="@drawable/baseline_edit_24"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
-
-            <View
-                android:id="@+id/view3"
-                android:layout_width="6dp"
-                android:layout_height="6dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/viewback" />
-
-            <TextView
-                android:id="@+id/passengerTextOneWay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="5dp"
-                android:padding="5dp"
-                android:text="1 Traveller"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-        </LinearLayout>
+        </RelativeLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -98,8 +118,10 @@
         android:layout_below="@id/toolbarOneway"
         android:elevation="8dp"
         android:orientation="horizontal"
+        android:padding="-10dp"
         app:cv_dayViewResource="@layout/calendar_layout"
-        app:cv_weekFooterResource="@drawable/refs"
+        app:cv_weekFooterResource="@color/blackLight"
+        app:cv_weekHeaderResource="@color/blackLight"
         tools:itemCount="5" />
 
     <View
@@ -107,16 +129,18 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/weekCalendarView"
+        android:layout_marginTop="-4dp"
         android:background="@drawable/viewsepertor" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_below="@id/view"
+        android:layout_gravity="center"
         android:layout_marginTop="1dp"
         android:orientation="vertical"
+        android:visibility="gone"
         shimmer:duration="800">
 
         <!-- Adding 7 rows of placeholders -->
@@ -141,10 +165,75 @@
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shimmer_view_container"
+        android:layout_marginVertical="5dp"
+        android:background="#f2f2f2"
+        android:padding="6dp">
+
+        <TextView
+            android:id="@+id/departureSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="12dp"
+            android:drawableEnd="@drawable/arrow_down_long_solid"
+            android:drawablePadding="8dp"
+            android:text="Dep"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/arrivalSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="12dp"
+            android:layout_toRightOf="@id/departureSort"
+            android:drawableEnd="@drawable/arrow_down_long_solid"
+            android:drawablePadding="8dp"
+            android:text="Arr"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/priceSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="12dp"
+            android:drawableEnd="@drawable/arrow_down_long_solid"
+            android:drawablePadding="8dp"
+            android:text="Price"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/flightsRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/view"
+        android:layout_below="@id/relative_sort"
         tools:listitem="@layout/flight_layout" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/padding_20"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@color/blackLight"
+        app:fabSize="auto"
+        app:srcCompat="@drawable/outline_filter_alt_24"
+        app:tint="@color/white" />
 </RelativeLayout>

@@ -18,6 +18,15 @@ public class Traveller implements Serializable {
 
     String type;
     String dob;
+    String passportNo;
+
+    public String getPassportNo() {
+        return passportNo;
+    }
+
+    public void setPassportNo(String passportNo) {
+        this.passportNo = passportNo;
+    }
 
     public String getDob() {
         return dob;

@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class SearchDialog extends BottomSheetDialogFragment {
         ImageView imgToolBack = view.findViewById(R.id.img_tool_back);
         final EditText edtToolSearch = view.findViewById(R.id.edt_tool_search);
         ImageView imgToolMic = view.findViewById(R.id.img_tool_mic);
-        final ListView listSearch = (ListView) view.findViewById(R.id.list_search);
+        final ListView listSearch = view.findViewById(R.id.list_search);
         BottomSheetBehavior bottomSheetBehavior = new BottomSheetBehavior();
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         imgToolMic.setOnClickListener(view1 -> {
@@ -88,7 +89,7 @@ public class SearchDialog extends BottomSheetDialogFragment {
                     byte[] buffer = new byte[size];
                     is.read(buffer);
                     is.close();
-                    json = new String(buffer, "UTF-8");
+                    json = new String(buffer, StandardCharsets.UTF_8);
                     airportCodes = gson.fromJson(json, new TypeToken<List<AirportCode>>() {
                     }.getType());
                     final SearchAdapter searchAdapter = new SearchAdapter(getContext(), airportCodes, false);
@@ -108,7 +109,7 @@ public class SearchDialog extends BottomSheetDialogFragment {
                     byte[] buffer = new byte[size];
                     is.read(buffer);
                     is.close();
-                    json = new String(buffer, "UTF-8");
+                    json = new String(buffer, StandardCharsets.UTF_8);
                     airportCodes = gson.fromJson(json, new TypeToken<List<AirportCode>>() {
                     }.getType());
                     List<AirportCode> airportCodeList = new ArrayList<>();

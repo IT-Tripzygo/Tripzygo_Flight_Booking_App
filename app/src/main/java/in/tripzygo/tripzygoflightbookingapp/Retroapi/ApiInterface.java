@@ -18,6 +18,9 @@ public interface ApiInterface {
     @POST("fms/v1/review")
     Call<JsonObject> getReview(@Body JsonObject jsonObject);
 
+    @POST("fms/v1/farerule")
+    Call<JsonObject> getFareRule(@Body JsonObject jsonObject);
+
     @POST("seat")
     Call<JsonObject> getSeats(@Body JsonObject jsonObject);
 
@@ -31,6 +34,9 @@ public interface ApiInterface {
     Call<JsonObject> book(@Body JsonObject jsonObject);
 
     @FormUrlEncoded
-    @POST("initiateLink")
-    Call<JsonObject> getAccessKey(@Field("key") String key, @Field("txnid") String txnid, @Field("amount") float amount, @Field("productinfo") String productinfo, @Field("firstname") String firstname, @Field("phone") Long phone, @Field("email") String email, @Field("surl") String surl, @Field("furl") String furl, @Field("hash") String hash, @Field("show_payment_mode") String show_payment_mode);
+    @POST("easebuzz_request.php")
+    Call<JsonObject> getAccessKey(@Field("Token") String Token, @Field("txnid") String txnid, @Field("amount") float amount, @Field("productinfo") String productinfo, @Field("firstname") String firstname, @Field("phone") Long phone, @Field("email") String email, @Field("api_name") String api_name);
+
+    @POST("login")
+    Call<JsonObject> login(@Body JsonObject jsonObject);
 }

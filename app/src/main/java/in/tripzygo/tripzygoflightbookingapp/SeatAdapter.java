@@ -14,8 +14,8 @@ import java.util.List;
 
 public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder> {
 
-    private List<Seat> seatList;
-    private Context context;
+    private final List<Seat> seatList;
+    private final Context context;
 
     public SeatAdapter(List<Seat> seatList, Context context) {
         this.seatList = seatList;

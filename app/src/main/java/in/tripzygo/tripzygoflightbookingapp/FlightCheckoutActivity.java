@@ -2,6 +2,7 @@ package in.tripzygo.tripzygoflightbookingapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -23,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import in.tripzygo.tripzygoflightbookingapp.Fragments.PolicyDialog;
 import in.tripzygo.tripzygoflightbookingapp.Modals.FlightDetails;
 import in.tripzygo.tripzygoflightbookingapp.Retroapi.ApiInterface;
 import in.tripzygo.tripzygoflightbookingapp.Retroapi.Retrofitt;
@@ -43,13 +47,13 @@ public class FlightCheckoutActivity extends AppCompatActivity {
     ImageView airlineImage;
     RecyclerView flightRecyclerView;
     TextView DepartureCityText, ArrivalCityText, classText, stopText, timeText, FareType, BaseFare, Taxes, ConvenienceFees,
-            NetPayable, price_flight, ConvenienceFeesText, noOfPassenger,FareTypeText;
+            NetPayable, price_flight, ConvenienceFeesText, noOfPassenger, FareTypeText, cancellationTextView;
     Button bookNow;
     String id, bookingId, segmentId;
     JsonArray tripInfos;
     int finalAmount;
+    MaterialToolbar materialToolbar;
     ShimmerFrameLayout shimmerFrameLayout;
-
 
 
     @SuppressLint("MissingInflatedId")
@@ -59,6 +63,7 @@ public class FlightCheckoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_flight_checkout);
         Bundle bundle = getIntent().getBundleExtra("bundle");
         String pa = bundle.getString("paxInfo");
+        id=bundle.getString("id");
         flightDetails = (FlightDetails) bundle.get("flightDetails");
         Gson gson = new Gson();
         JsonObject pax = gson.fromJson(pa, new TypeToken<JsonObject>() {
@@ -68,7 +73,13 @@ public class FlightCheckoutActivity extends AppCompatActivity {
         JsonArray totalPriceList = gson.fromJson(flightDetails.getTotalPriceList(), new TypeToken<JsonArray>() {
         }.getType());
         flightRecyclerView = findViewById(R.id.flightDetailRecycler);
-        shimmerFrameLayout=findViewById(R.id.shimmer_view_containerCheckout);
+        materialToolbar = findViewById(R.id.toolbar_review);
+        materialToolbar.setNavigationOnClickListener(view -> {
+            super.onBackPressed();
+        });
+        materialToolbar.setTitle("Flight Review Details");
+        materialToolbar.setTitleTextColor(Color.WHITE);
+        shimmerFrameLayout = findViewById(R.id.shimmer_view_containerCheckout);
         shimmerFrameLayout.startShimmerAnimation();
         flightRecyclerView.setLayoutManager(new LinearLayoutManager(FlightCheckoutActivity.this));
         DepartureCityText = findViewById(R.id.DepartureCityText);
@@ -78,6 +89,7 @@ public class FlightCheckoutActivity extends AppCompatActivity {
         timeText = findViewById(R.id.timeText);
         FareType = findViewById(R.id.FareType);
         FareTypeText = findViewById(R.id.FareTypeText);
+        cancellationTextView = findViewById(R.id.cancellation);
         BaseFare = findViewById(R.id.BaseFare);
         Taxes = findViewById(R.id.Taxes);
         ConvenienceFees = findViewById(R.id.ConvenienceFees);
@@ -165,15 +177,13 @@ public class FlightCheckoutActivity extends AppCompatActivity {
             } else if (jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").get("rT").getAsInt() == 2) {
                 FareType.setText("Partial Refundable");
             }
-        }
-        else {
+        } else {
             FareType.setVisibility(View.GONE);
             FareTypeText.setVisibility(View.GONE);
         }
         System.out.println("jsonObjects.get(0).getAsJsonObject(\"fd\").getAsJsonObject(\"ADULT\").getAsJsonObject(\"fC\").get(\"BF\").getAsInt() = " + jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").getAsJsonObject("fC").get("BF").getAsInt());
         ConvenienceFees.setVisibility(View.GONE);
         ConvenienceFeesText.setVisibility(View.GONE);
-        id = jsonObjects.get(0).getAsJsonObject().get("id").getAsString();
         String Adult = pax.get("ADULT").getAsString();
         String Children = pax.get("CHILD").getAsString();
         String Infant = pax.get("INFANT").getAsString();
@@ -222,12 +232,53 @@ public class FlightCheckoutActivity extends AppCompatActivity {
                             System.out.println("bookingId = " + bookingId);
                             JsonObject totalFareDetail = object.getAsJsonObject("totalPriceInfo").getAsJsonObject("totalFareDetail");
                             finalAmount = totalFareDetail.getAsJsonObject("fC").get("TF").getAsInt();
-                            BaseFare.setText("₹ " + totalFareDetail.getAsJsonObject("fC").get("BF").getAsInt());
-                            Taxes.setText("₹ " + totalFareDetail.getAsJsonObject("fC").get("TAF").getAsInt());
-                            NetPayable.setText("₹ " + totalFareDetail.getAsJsonObject("fC").get("TF").getAsInt());
-                            price_flight.setText("₹ " + totalFareDetail.getAsJsonObject("fC").get("TF").getAsInt());
+                            String BaseFareString = String.valueOf(totalFareDetail.getAsJsonObject("fC").get("BF").getAsInt());
+                            String TaxesString = String.valueOf(totalFareDetail.getAsJsonObject("fC").get("TAF").getAsInt());
+                            Locale locale = new Locale.Builder().setLanguage("en").setRegion("IN").build();
+                            NumberFormat formatter = NumberFormat.getCurrencyInstance(locale);
+                            String basecurrency = formatter.format(totalFareDetail.getAsJsonObject("fC").get("BF").getAsInt());
+                            String taxcurrency = formatter.format(totalFareDetail.getAsJsonObject("fC").get("TAF").getAsInt());
+                            String totalcurrency = formatter.format(totalFareDetail.getAsJsonObject("fC").get("TF").getAsInt());
+                            int basecentsIndex = basecurrency.lastIndexOf(".00");
+                            int taxcentsIndex = taxcurrency.lastIndexOf(".00");
+                            int totalcentsIndex = totalcurrency.lastIndexOf(".00");
+                            if (taxcentsIndex != -1) {
+                                taxcurrency = taxcurrency.substring(0, taxcentsIndex);
+                            }
+                            if (totalcentsIndex != -1) {
+                                totalcurrency = totalcurrency.substring(0, totalcentsIndex);
+                            }
+                            if (basecentsIndex != -1) {
+                                basecurrency = basecurrency.substring(0, basecentsIndex);
+                            }
+                            BaseFare.setText(basecurrency);
+                            Taxes.setText(taxcurrency);
+                            NetPayable.setText(totalcurrency);
+                            price_flight.setText(totalcurrency);
                             shimmerFrameLayout.stopShimmerAnimation();
                             shimmerFrameLayout.setVisibility(View.GONE);
+                            cancellationTextView.setOnClickListener(view -> {
+                                String s = sI.get(0).getAsJsonObject().getAsJsonObject("da").get("cityCode").getAsString() + "-" + sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("aa").get("cityCode").getAsString();
+                                String D=sI.get(0).getAsJsonObject().getAsJsonObject("da").get("city").getAsString();
+                                String A= sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("aa").get("city").getAsString();
+                                PolicyDialog dialog = new PolicyDialog(FlightCheckoutActivity.this, id, s,D,A);
+                                dialog.setCancelable(false);
+                                dialog.show(getSupportFragmentManager(), "show_description");
+                            });
+                            bookNow.setOnClickListener(view -> {
+                                startActivity(new Intent(FlightCheckoutActivity.this, PaymentActivity.class)
+                                        .putExtra("bundle", bundle)
+                                        .putExtra("tripInfos", String.valueOf(tripInfos))
+                                        .putExtra("sI", String.valueOf(sI))
+                                        .putExtra("totalPriceList", String.valueOf(totalPriceList))
+                                        .putExtra("bookingId", bookingId)
+                                        .putExtra("segmentKey", segmentId)
+                                        .putExtra("finalAmount", finalAmount)
+                                        .putExtra("BaseFare", BaseFareString)
+                                        .putExtra("Taxes", TaxesString)
+                                        .putExtra("paxInfo", String.valueOf(pax)));
+
+                            });
                         }
                     } else {
                         System.out.println("response review = " + response.message());
@@ -242,18 +293,6 @@ public class FlightCheckoutActivity extends AppCompatActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        bookNow.setOnClickListener(view -> {
-            startActivity(new Intent(FlightCheckoutActivity.this, PaymentActivity.class)
-                    .putExtra("bundle", bundle)
-                    .putExtra("tripInfos", String.valueOf(tripInfos))
-                    .putExtra("sI", String.valueOf(sI))
-                    .putExtra("totalPriceList", String.valueOf(totalPriceList))
-                    .putExtra("bookingId", bookingId)
-                    .putExtra("segmentKey", segmentId)
-                    .putExtra("finalAmount", finalAmount)
-                    .putExtra("paxInfo", String.valueOf(pax)));
-
-        });
 
 
     }

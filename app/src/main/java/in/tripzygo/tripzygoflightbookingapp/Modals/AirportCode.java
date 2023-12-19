@@ -1,7 +1,8 @@
 package in.tripzygo.tripzygoflightbookingapp.Modals;
 
 public class AirportCode {
-    String code,name,citycode,city,country,countrycode;
+    String code, name, citycode, city, country, countrycode;
+    boolean popular;
 
     public String getCode() {
         return code;
@@ -49,5 +50,13 @@ public class AirportCode {
 
     public void setCountrycode(String countrycode) {
         this.countrycode = countrycode;
+    }
+
+    public boolean isPopular() {
+        return popular;
+    }
+
+    public void setPopular(boolean popular) {
+        this.popular = popular;
     }
 }

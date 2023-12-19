@@ -6,40 +6,365 @@
     android:layout_height="match_parent"
     tools:context=".BookingResultActivity">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_main"
+
+
+    <RelativeLayout
+        android:id="@+id/ticketLayout1"
         android:layout_width="match_parent"
-        android:layout_height="330dp"
-        app:lottie_repeatCount="0"
-        app:lottie_speed="1" />
+        android:layout_height="270dp"
+        android:layout_marginTop="-15dp"
+        android:background="@color/royalBlue"
+        android:paddingBottom="15dp">
 
-    <TextView
-        android:id="@+id/congotxt"
-        android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="@dimen/padding_10"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:src="@drawable/ticket_simple_solid" />
+
+        <ImageView
+            android:id="@+id/checkimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/circle_check_solid"
+            app:tint="@color/royalBlue" />
+
+        <TextView
+            android:id="@+id/congotxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/checkimage"
+            android:layout_centerInParent="true"
+            android:text="Booking Confirmed"
+            android:textColor="@color/blackLight"
+            android:textSize="25sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/congotxt"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:text="You will receive e-ticket on your email address "
+            android:textColor="@color/creamWhite"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/ticketLayout1"
+        android:background="#19787777" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="380dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Booking Confirmed"
-        android:textColor="@color/blue"
-        android:textSize="32sp" />
+        android:layout_below="@id/view1">
+
+        <TextView
+            android:id="@+id/departureText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="@dimen/padding_10"
+            android:text="One Way"
+            android:textColor="@color/darkGrey"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/TicketWayDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/departureText1"
+            android:layout_marginHorizontal="@dimen/padding_10"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/flight"
+            android:padding="@dimen/padding_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/flagImg"
+                android:layout_width="52dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/airline_nameOneway"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_10"
+                android:text="Akasha Air"
+                android:textColor="@color/blackLight"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/flagImg" />
+
+            <TextView
+                android:id="@+id/cityCodeDeparture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:text="DEL"
+                android:textAllCaps="true"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/flagImg"
+                app:layout_constraintTop_toTopOf="@+id/flagImg" />
+
+            <TextView
+                android:id="@+id/timeToDeparture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="10:30"
+                android:textColor="@color/blackLight"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/cityCodeDeparture"
+                app:layout_constraintStart_toEndOf="@+id/cityCodeDeparture"
+                app:layout_constraintTop_toTopOf="@+id/cityCodeDeparture" />
+
+            <ImageView
+                android:id="@+id/ArrowRight"
+                android:layout_width="30dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/arrowright"
+                app:layout_constraintBottom_toBottomOf="@+id/timeToDeparture"
+                app:layout_constraintStart_toEndOf="@+id/timeToDeparture"
+                app:layout_constraintTop_toTopOf="@+id/timeToDeparture"
+                app:tint="@color/blackLight" />
+
+            <TextView
+                android:id="@+id/cityCodeArrival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="MOB"
+                android:textAllCaps="true"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/ArrowRight"
+                app:layout_constraintStart_toEndOf="@+id/ArrowRight"
+                app:layout_constraintTop_toTopOf="@+id/ArrowRight" />
+
+            <TextView
+                android:id="@+id/timeToArrival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="12:30"
+                android:textColor="@color/blackLight"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/cityCodeArrival"
+                app:layout_constraintStart_toEndOf="@+id/cityCodeArrival"
+                app:layout_constraintTop_toTopOf="@+id/cityCodeArrival" />
+
+            <TextView
+                android:id="@+id/dateToDeparture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Fri, 12 July '23"
+                android:textColor="@color/blackLight"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@+id/cityCodeDeparture"
+                app:layout_constraintTop_toBottomOf="@+id/cityCodeDeparture" />
+
+            <TextView
+                android:id="@+id/dateToArrival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Fri, 12 July '23"
+                android:textColor="@color/blackLight"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="@+id/timeToArrival"
+                app:layout_constraintTop_toBottomOf="@+id/timeToArrival" />
 
 
-    <Button
-        android:id="@+id/backToHome"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/arrivalText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_below="@id/TicketWayDetail"
+            android:layout_marginTop="@dimen/padding_10"
+            android:text="Round Way"
+            android:textColor="@color/darkGrey"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/RoundWay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/arrivalText1"
+            android:layout_marginHorizontal="@dimen/padding_10"
+            android:layout_marginVertical="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/flight"
+            android:padding="@dimen/padding_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TicketWayDetail">
+
+            <ImageView
+                android:id="@+id/flagImgSecond"
+                android:layout_width="52dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/airline_nameReturn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_10"
+                android:text="Akasha Air"
+                android:textColor="@color/blackLight"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/flagImgSecond" />
+
+            <TextView
+                android:id="@+id/cityCodeDepartureRound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:text="DEL"
+                android:textAllCaps="true"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/flagImgSecond"
+                app:layout_constraintTop_toTopOf="@+id/flagImgSecond" />
+
+            <TextView
+                android:id="@+id/timeToDepartureRound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="10:30"
+                android:textColor="@color/blackLight"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/cityCodeDepartureRound"
+                app:layout_constraintStart_toEndOf="@+id/cityCodeDepartureRound"
+                app:layout_constraintTop_toTopOf="@+id/cityCodeDepartureRound" />
+
+            <ImageView
+                android:id="@+id/ArrowRightRound"
+                android:layout_width="30dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/arrowright"
+                app:layout_constraintBottom_toBottomOf="@+id/timeToDepartureRound"
+                app:layout_constraintStart_toEndOf="@+id/timeToDepartureRound"
+                app:layout_constraintTop_toTopOf="@+id/timeToDepartureRound"
+                app:tint="@color/blackLight" />
+
+            <TextView
+                android:id="@+id/cityCodeArrivalRound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="MOB"
+                android:textAllCaps="true"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/ArrowRightRound"
+                app:layout_constraintStart_toEndOf="@+id/ArrowRightRound"
+                app:layout_constraintTop_toTopOf="@+id/ArrowRightRound" />
+
+            <TextView
+                android:id="@+id/timeToArrivalRound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="12:30"
+                android:textColor="@color/blackLight"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/cityCodeArrivalRound"
+                app:layout_constraintStart_toEndOf="@+id/cityCodeArrivalRound"
+                app:layout_constraintTop_toTopOf="@+id/cityCodeArrivalRound" />
+
+            <TextView
+                android:id="@+id/dateToDepartureRound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Fri, 12 July '23"
+                android:textColor="@color/blackLight"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@+id/cityCodeDepartureRound"
+                app:layout_constraintTop_toBottomOf="@+id/cityCodeDepartureRound" />
+
+            <TextView
+                android:id="@+id/dateToArrivalRound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Fri, 12 July '23"
+                android:textColor="@color/blackLight"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="@+id/timeToArrivalRound"
+                app:layout_constraintTop_toBottomOf="@+id/cityCodeDepartureRound" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/button_login"
-        android:foreground="#00000000"
-        android:text="Home"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/blue" />
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="15dp">
+
+        <Button
+            android:id="@+id/viewBooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_login"
+            android:foreground="#00000000"
+            android:text="View Booking"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/royalBlue" />
+
+        <Button
+            android:id="@+id/backToHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_login"
+            android:foreground="#00000000"
+            android:text="Home"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/royalBlue" />
+    </LinearLayout>
 </RelativeLayout>

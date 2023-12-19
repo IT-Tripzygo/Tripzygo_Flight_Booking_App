@@ -9,16 +9,16 @@
         android:id="@+id/tablay"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/blue"
+        android:background="@color/blackLight"
         app:tabIndicatorFullWidth="true"
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/TextAppearance.AppCompat.Menu"
-        app:tabTextColor="@color/grey" />
+        app:tabTextColor="@color/greyLighter" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/tablay" />
 
 </RelativeLayout>

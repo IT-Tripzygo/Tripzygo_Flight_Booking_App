@@ -172,7 +172,7 @@ public class AddNewTravellerActivity extends AppCompatActivity implements DatePi
     private void showDatePickerDialog(String type) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
-                (DatePickerDialog.OnDateSetListener) this,
+                this,
                 Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)

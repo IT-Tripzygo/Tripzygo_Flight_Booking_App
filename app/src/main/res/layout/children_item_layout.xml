@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="15dp">
+
+    <TextView
+        android:id="@+id/TravellerTypeChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Children"
+        android:textSize="20sp"
+        android:textColor="@color/blackLight"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup2Child"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/TravellerTypeChild"
+        tools:layout_editor_absoluteX="15dp">
+
+        <RadioButton
+            android:id="@+id/masterChild"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/blackLight"
+            android:text="Master" />
+
+        <RadioButton
+            android:id="@+id/missChild"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/blackLight"
+            android:layout_marginStart="20dp"
+            android:text="Ms" />
+
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/FirstNameChild"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/normal_background_black_stroke"
+        android:hint="First name"
+        android:textSize="18sp"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/blackLight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup2Child" />
+
+    <EditText
+        android:id="@+id/LastNameChild"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/normal_background_black_stroke"
+        android:hint="Last name"
+        android:textSize="18sp"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/blackLight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FirstNameChild" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ChildrenCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/normal_background_black_stroke"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LastNameChild">
+
+        <TextView
+            android:id="@+id/childrenDOB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date of Birth"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/calenderImageDOBChildren"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/calender_img_vector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/blackLight" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:id="@+id/pNoChild"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/normal_background_black_stroke"
+        android:hint="Passport No"
+        android:visibility="gone"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/blackLight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ChildrenCalendar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

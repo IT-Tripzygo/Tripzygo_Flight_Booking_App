@@ -1,7 +1,15 @@
 package in.tripzygo.tripzygoflightbookingapp.Modals;
 
 public class Booking {
-    String bookingId,tripInfos,departure;
+    String bookingId, tripInfos, departure, phoneNo;
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
 
     public String getDeparture() {
         return departure;

@@ -1,6 +1,7 @@
 package in.tripzygo.tripzygoflightbookingapp;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -10,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,18 +37,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DisplayBookingActivity extends AppCompatActivity {
-    TextView DepartureCityText, ArrivalCityText, classText, stopText, timeText, ChangeText, priceFLightPayment, returnDepartureCityText, returnArrivalCityText, returnClassText, returnStopText, FareType, BaseFare, Taxes, ConvenienceFees,FareTypeText,
+    TextView DepartureCityText, ArrivalCityText, classText, stopText, timeText, ChangeText, priceFLightPayment, returnDepartureCityText, returnArrivalCityText, returnClassText, returnStopText, FareType, BaseFare, Taxes, ConvenienceFees, FareTypeText,
             NetPayable, returnTimeText;
     RecyclerView flightRecyclerView, returnFlightRecyclerView, passengerRecyclerBooking, returnPassengerRecyclerBooking;
     Booking booking;
     String bookingId;
     boolean isCompleted = false;
+    MaterialToolbar materialToolbar;
+    RelativeLayout eTicketRelativeLayout, invoiceRelativeLayout;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_booking);
+        eTicketRelativeLayout = findViewById(R.id.eTicketBtn);
+        invoiceRelativeLayout = findViewById(R.id.invoiceBtn);
         DepartureCityText = findViewById(R.id.DepartureCityText);
         ArrivalCityText = findViewById(R.id.ArrivalCityText);
         classText = findViewById(R.id.classText);
@@ -56,6 +63,10 @@ public class DisplayBookingActivity extends AppCompatActivity {
         BaseFare = findViewById(R.id.BaseFare);
         Taxes = findViewById(R.id.Taxes);
         NetPayable = findViewById(R.id.NetPayable);
+        materialToolbar = findViewById(R.id.toolbarDisplay);
+        materialToolbar.setNavigationOnClickListener(view -> {
+            onBackPressed();
+        });
         String book = getIntent().getStringExtra("booking");
         Gson gson = new Gson();
         System.out.println("book = " + book);
@@ -85,6 +96,7 @@ public class DisplayBookingActivity extends AppCompatActivity {
         JsonArray sI = jsonObject.getAsJsonArray("sI");
         JsonArray totalPriceList = jsonObject.getAsJsonArray("totalPriceList");
         FlightDetails flightDetails = new FlightDetails();
+        flightDetails.setAirlineImage(jsonObject.getAsJsonArray("sI").get(0).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("code").getAsString());
         flightDetails.setSI(String.valueOf(jsonObject.getAsJsonArray("sI")));
         flightDetails.setTotalPriceList(String.valueOf(jsonObject.getAsJsonArray("totalPriceList")));
         ApiInterface apiInterface = Retrofitt.initretro().create(ApiInterface.class);
@@ -97,13 +109,38 @@ public class DisplayBookingActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     JsonObject jsonObject2 = response.body();
                     JsonObject totalFareDetail = jsonObject2.getAsJsonObject("itemInfos").getAsJsonObject("AIR").getAsJsonObject("totalPriceInfo").getAsJsonObject("totalFareDetail");
-                    BaseFare.setText("₹ " + totalFareDetail.getAsJsonObject("fC").get("BF").getAsInt());
-                    Taxes.setText("₹ " + totalFareDetail.getAsJsonObject("fC").get("TAF").getAsInt());
-                    NetPayable.setText("₹ " + totalFareDetail.getAsJsonObject("fC").get("TF").getAsInt());
+                    Locale locale = new Locale.Builder().setLanguage("en").setRegion("IN").build();
+                    NumberFormat formatter = NumberFormat.getCurrencyInstance(locale);
+                    String basecurrency = formatter.format(totalFareDetail.getAsJsonObject("fC").get("BF").getAsInt());
+                    String taxcurrency = formatter.format(totalFareDetail.getAsJsonObject("fC").get("TAF").getAsInt());
+                    String totalcurrency = formatter.format(totalFareDetail.getAsJsonObject("fC").get("TF").getAsInt());
+                    int basecentsIndex = basecurrency.lastIndexOf(".00");
+                    int taxcentsIndex = taxcurrency.lastIndexOf(".00");
+                    int totalcentsIndex = totalcurrency.lastIndexOf(".00");
+                    if (taxcentsIndex != -1) {
+                        taxcurrency = taxcurrency.substring(0, taxcentsIndex);
+                    }
+                    if (totalcentsIndex != -1) {
+                        totalcurrency = totalcurrency.substring(0, totalcentsIndex);
+                    }
+                    if (basecentsIndex != -1) {
+                        basecurrency = basecurrency.substring(0, basecentsIndex);
+                    }
+                    BaseFare.setText(basecurrency);
+                    Taxes.setText(taxcurrency);
+                    NetPayable.setText(totalcurrency);
                     JsonArray travellerInfos = jsonObject2.getAsJsonObject("itemInfos").getAsJsonObject("AIR").getAsJsonArray("travellerInfos");
                     BookedFlightDetailsAdapter flightDetailsAdapter = new BookedFlightDetailsAdapter(flightDetails, DisplayBookingActivity.this, jsonObject.getAsJsonArray("sI").size(), isCompleted, travellerInfos);
                     flightRecyclerView.setAdapter(flightDetailsAdapter);
                     DepartureCityText.setText(sI.get(0).getAsJsonObject().getAsJsonObject("da").get("city").getAsString());
+                    eTicketRelativeLayout.setOnClickListener(view -> {
+                        JsonObject item = jsonObject2.getAsJsonObject("itemInfos");
+                        startActivity(new Intent(DisplayBookingActivity.this, EticketGenerator.class).putExtra("data", item.toString()).putExtra("bookingId", bookingId));
+                    });
+                    invoiceRelativeLayout.setOnClickListener(view -> {
+                        JsonObject item = jsonObject2.getAsJsonObject("itemInfos");
+                        startActivity(new Intent(DisplayBookingActivity.this, InvoiceActivity.class).putExtra("data", item.toString()).putExtra("bookingId", bookingId));
+                    });
                     if (sI.size() == 1) {
                         stopText.setText("non stop");
                         ArrivalCityText.setText(sI.get(0).getAsJsonObject().getAsJsonObject("aa").get("city").getAsString());
@@ -142,7 +179,7 @@ public class DisplayBookingActivity extends AppCompatActivity {
                             throw new RuntimeException(e);
                         }
                     } else {
-                        stopText.setText(sI.size()-1+" stop");
+                        stopText.setText(sI.size() - 1 + " stop");
                         ArrivalCityText.setText(sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("aa").get("city").getAsString());
                         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault());
                         SimpleDateFormat df1 = new SimpleDateFormat("E, dd MMM", Locale.getDefault());
@@ -197,8 +234,7 @@ public class DisplayBookingActivity extends AppCompatActivity {
                         } else if (jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").get("rT").getAsInt() == 2) {
                             FareType.setText("Partial Refundable");
                         }
-                    }
-                    else {
+                    } else {
                         FareType.setVisibility(View.GONE);
                         FareTypeText.setVisibility(View.GONE);
                     }
@@ -301,7 +337,7 @@ public class DisplayBookingActivity extends AppCompatActivity {
                             } else {
                                 FareType.setText("Partial Refundable");
                             }
-                        }else {
+                        } else {
                             FareType.setVisibility(View.GONE);
                             FareTypeText.setVisibility(View.GONE);
                         }
@@ -318,6 +354,8 @@ public class DisplayBookingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 System.out.println("t.getMessage() = " + t.getMessage());
+                System.out.println(t.getCause());
+                t.printStackTrace();
             }
         });
     }

@@ -63,13 +63,15 @@ public class SearchAdapter extends BaseAdapter {
             v = mLayoutInflater.inflate(R.layout.list_item_search, parent, false);
             holder.txtCountry = v.findViewById(R.id.txt_country);
             holder.txtName = v.findViewById(R.id.txt_name);
+            holder.txtCode = v.findViewById(R.id.txt_code);
             v.setTag(holder);
         } else {
 
             holder = (ViewHolder) v.getTag();
         }
         AirportCode airportCode = mCountries.get(position);
-        holder.txtCountry.setText(airportCode.getCode()+" - "+airportCode.getCity()+","+airportCode.getCountry());
+        holder.txtCountry.setText(airportCode.getCity()+", "+airportCode.getCountry());
+        holder.txtCode.setText(airportCode.getCitycode());
         holder.txtName.setText(airportCode.getName());
 
         return v;
@@ -78,6 +80,6 @@ public class SearchAdapter extends BaseAdapter {
 }
 
 class ViewHolder {
-    TextView txtCountry,txtName;
+    TextView txtCountry,txtName,txtCode;
 
 }

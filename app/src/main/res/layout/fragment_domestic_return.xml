@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.DomesticReturnFragment">
+
+    <TextView
+        android:id="@+id/departingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:letterSpacing=".02"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="5dp"
+        android:text="Departing Flight (1 Nov)"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/departingCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/departingTextView"
+        android:layout_marginStart="@dimen/padding_10"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="@dimen/padding_10"
+        android:layout_marginBottom="@dimen/padding_10"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/padding_10"
+        app:cardElevation="5dp">
+
+
+        <RelativeLayout
+            android:id="@+id/returnRelative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:id="@+id/airline_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/FlightImg"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="3dp"
+                android:text="Indigo"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="normal" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/FlightImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="1.5dp">
+
+                <ImageView
+                    android:id="@+id/airlineImage"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/indigo" />
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:text="₹4,999"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/FareType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/price"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toStartOf="@id/viewFares"
+                android:background="@drawable/refund_back"
+                android:backgroundTint="@color/forestGreen"
+                android:padding="3dp"
+                android:text="PR"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/classType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/price"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toStartOf="@id/FareType"
+                android:background="@drawable/refund_back"
+                android:backgroundTint="@color/darkGrey"
+                android:padding="3dp"
+                android:text="PR"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/viewFares"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/price"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:padding="3dp"
+                android:text="View Fares"
+                android:textColor="@color/royalBlue"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/DepartureText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/airline_name"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/tv"
+                android:paddingHorizontal="3dp"
+                android:text="07:30"
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/DepartureCityText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/DepartureText"
+                android:layout_marginStart="10dp"
+                android:text="DEL"
+                android:textColor="#313335"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+
+            <View
+                android:id="@+id/viewbtwad"
+                android:layout_width="110dp"
+                android:layout_height="20dp"
+                android:layout_below="@id/airline_name"
+                android:layout_marginTop="13dp"
+                android:layout_toEndOf="@id/DepartureText"
+                android:background="@drawable/viewflight" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/airline_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="18.5dp"
+                android:layout_toStartOf="@id/ArrivalText"
+                android:layout_toEndOf="@id/DepartureText"
+                android:rotation="90"
+                android:src="@drawable/baseline_flight_24"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/ArrivalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/airline_name"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_toEndOf="@id/viewbtwad"
+                android:background="@drawable/tv"
+                android:paddingHorizontal="3dp"
+                android:text="07:30"
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/ArrivalCityText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ArrivalText"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/viewbtwad"
+                android:text="IDR"
+                android:textColor="#313335"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/airline_name"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="9dp"
+                android:layout_toEndOf="@id/DepartureText"
+                android:text="1h 25m"
+                android:textColor="@color/darkGrey"
+                android:textSize="9sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewbtwad"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="-9dp"
+                android:layout_toEndOf="@id/DepartureText"
+                android:text="non-stop"
+                android:textColor="@color/darkGrey"
+                android:textSize="9sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/returningTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/departingCard"
+        android:letterSpacing=".02"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="5dp"
+        android:text="Returning Flight (1 Nov)"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_containerReturn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/returningTextView"
+        android:layout_gravity="center"
+        android:layout_marginTop="1dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        shimmer:duration="800">
+
+        <!-- Adding 7 rows of placeholders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/returnWayRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/shimmer_view_containerReturn"
+        android:layout_marginStart=".2dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        tools:listitem="@layout/return_flight_layout" />
+</RelativeLayout>
+

@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ticketLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EticketGenerator">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/headerContainer"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="#18243e"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Booking Id"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/idText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="#18243e"
+                    android:src="@drawable/travbox"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="@id/idText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/textView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/headerContainer"
+                android:isScrollContainer="false" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerForPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textReturn" />
+
+            <TextView
+                android:id="@+id/textReturn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="20dp"
+                android:fontFamily="@font/poppins"
+                android:text="Return "
+                android:textColor="@color/blackLight"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="25dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="60dp"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerForPayment">
+
+                <RelativeLayout
+                    android:id="@+id/farebox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/l1background"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:id="@+id/taxBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/l2background">
+
+                        <TextView
+                            android:id="@+id/farebreak"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:padding="5dp"
+                            android:text="Fare Breakup"
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/relative2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/taxBox"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:id="@+id/baseprice1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="Base Price"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/basePrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="3dp"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+
+                        <TextView
+                            android:id="@+id/AirlineTaxAndFeeTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/baseprice1"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Airline Taxes and Fees"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/AirlineTaxAndFee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/basePrice"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="3dp"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/AirlineTaxAndFeeTitle"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Conveniennce Fee"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/ConvenientFee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/AirlineTaxAndFee"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="3dp"
+                            android:textColor="@color/black"
+                            android:textSize="10dp"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/relative2"
+                        android:background="@drawable/l2background"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:id="@+id/off1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Instant off"
+                            android:textColor="#4CAF50"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/InstantOff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="3dp"
+                            android:textColor="@color/black"
+                            android:textSize="10dp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/off1"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Total Paid"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/totalFee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/InstantOff"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="3dp"
+                            android:textColor="@color/black"
+                            android:textSize="10dp" />
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/importance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:fontFamily="@font/poppins"
+                    android:paddingHorizontal="5dp"
+                    android:text="Importance Information"
+                    android:textColor="@color/blackLight"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/farebox"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/info1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/importance"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins"
+                    android:paddingHorizontal="5dp"
+                    android:text="Please note that for all domestic flights,  check-in counters close 60 minutes prior to  flight departure."
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="@+id/importance"
+                    app:layout_constraintTop_toBottomOf="@+id/importance" />
+
+                <TextView
+                    android:id="@+id/info2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/info1"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins"
+                    android:paddingHorizontal="5dp"
+                    android:text="It is mandatory for the passenger to carry a valid photo ID proof. Permissible ID proofs include - Aadhaar Card, Passport or any other government recognized ID proof. For infant travellers (0-2 yrs), it is mandatory to carry the birth certificate as a proof."
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="@+id/info1"
+                    app:layout_constraintTop_toBottomOf="@+id/info1" />
+
+                <TextView
+                    android:id="@+id/info3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/info2"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins"
+                    android:paddingHorizontal="5dp"
+                    android:text="Kindly carry a copy of your e-ticket on a tablet/ mobile/ laptop or a printed copy of the ticket to enter the airport and show at the  time of check-in."
+                    android:textSize="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/info2"
+                    app:layout_constraintTop_toBottomOf="@+id/info2" />
+
+
+                <RelativeLayout
+                    android:id="@+id/relative3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/info3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/info3">
+
+                    <TextView
+                        android:id="@+id/cancelinnfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Cancellation Innformation"
+                        android:textColor="@color/blackLight"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/cancel1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/cancelinnfo"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppins"
+                        android:paddingHorizontal="5dp"
+                        android:text="For any queries with Travbox regarding this booking,please use the Booking ID as a reference."
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/cancel2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/cancel1"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppins"
+                        android:paddingHorizontal="5dp"
+                        android:text="Please note that for all domestic flights, check-in counters close 60 minutes prior to flight departure"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/cancel3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/cancel2"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppins"
+                        android:paddingHorizontal="5dp"
+                        android:text="It is mandatory for the passenger to carry a valid photo ID proof. Permissible ID proofs include - Aadhaar Card, Passport or any other government recognized ID proof. For infant travellers (0-2 yrs), it is mandatory to carry the birth certificate as a proof."
+                        android:textSize="10dp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/darkGrey"
+                    app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/relative3" />
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relative3"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/relative3"
+                    tools:layout_editor_absoluteX="0dp">
+
+                    <TextView
+                        android:id="@+id/trip1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Travbox Support"
+                        android:textSize="10dp" />
+
+
+                    <TextView
+                        android:id="@+id/chat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/trip1"
+                        android:layout_marginVertical="3dp"
+                        android:text="Chat :"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/trip3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/chat"
+                        android:text="Helpline :"
+                        android:textSize="10dp" />
+
+
+
+
+                </RelativeLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/generate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate"
+        android:backgroundTint="@color/royalBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

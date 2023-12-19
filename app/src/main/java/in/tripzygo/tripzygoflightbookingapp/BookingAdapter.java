@@ -72,39 +72,14 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             } else if (sI.size() > 1) {
                 holder.bookingArrivalCityCodeText.setText(sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("aa").get("cityCode").getAsString());
                 holder.booking_destination.setText("Trip to " + sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("aa").get("city").getAsString());
-                holder.imageView.setImageDrawable(context.getDrawable(R.drawable.arrow_right_arrow_left_solid_black));
+                holder.imageView.setImageDrawable(context.getDrawable(R.drawable.baseline_flight_24));
+                holder.imageView.setRotation(90);
                 holder.airlineName.setText(sI.get(0).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("name").getAsString()
                         + " " + sI.get(0).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("code").getAsString()
                         + " " + sI.get(0).getAsJsonObject().getAsJsonObject("fD").get("fN").getAsString()
                         + "," + sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("name").getAsString()
                         + " " + sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("code").getAsString()
                         + " " + sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("fD").get("fN").getAsString());
-                try {
-                    Date dof = df.parse(depDate);
-                    String adate = sI.get(sI.size() - 1).getAsJsonObject().get("at").getAsString();
-                    Date aol = df.parse(adate);
-                    Date now = Calendar.getInstance().getTime();
-                    if (dof.before(now)) {
-                        holder.completedText.setVisibility(View.VISIBLE);
-                    }
-                    String dTime = df1.format(dof);
-                    String aTime = df1.format(aol);
-                    holder.bookingArrivalDateText.setText(dTime + " - " + aTime);
-
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            holder.bookingDepartureCityCodeText.setText(sI.get(0).getAsJsonObject().getAsJsonObject("da").get("cityCode").getAsString());
-        } else if (jsonArray.size() > 1) {
-            JsonArray sI = jsonArray.get(0).getAsJsonObject().getAsJsonArray("sI");
-            JsonArray returnsI = jsonArray.get(jsonArray.size()-1).getAsJsonObject().getAsJsonArray("sI");
-            if (sI.size() == 1) {
-                holder.bookingArrivalCityCodeText.setText(sI.get(0).getAsJsonObject().getAsJsonObject("aa").get("cityCode").getAsString());
-                holder.booking_destination.setText("Trip to " + sI.get(0).getAsJsonObject().getAsJsonObject("aa").get("city").getAsString());
-                holder.imageView.setImageDrawable(context.getDrawable(R.drawable.baseline_flight_24));
-                holder.imageView.setRotation(90);
-                holder.airlineName.setText(sI.get(0).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("name").getAsString() + " " + sI.get(0).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("code").getAsString() + " " + sI.get(0).getAsJsonObject().getAsJsonObject("fD").get("fN").getAsString());
                 try {
                     Date dof = df.parse(depDate);
                     Date now = Calendar.getInstance().getTime();
@@ -117,19 +92,44 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (sI.size() > 1) {
-                holder.bookingArrivalCityCodeText.setText(sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("aa").get("cityCode").getAsString());
-                holder.booking_destination.setText("Trip to " + sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("aa").get("city").getAsString());
+            }
+            holder.bookingDepartureCityCodeText.setText(sI.get(0).getAsJsonObject().getAsJsonObject("da").get("cityCode").getAsString());
+        } else if (jsonArray.size() > 1) {
+            JsonArray sI = jsonArray.get(0).getAsJsonObject().getAsJsonArray("sI");
+            JsonArray returnsI = jsonArray.get(jsonArray.size() - 1).getAsJsonObject().getAsJsonArray("sI");
+            if (returnsI.size() == 1) {
+                holder.bookingArrivalCityCodeText.setText(returnsI.get(0).getAsJsonObject().getAsJsonObject("aa").get("cityCode").getAsString());
+                holder.booking_destination.setText("Trip to " + returnsI.get(0).getAsJsonObject().getAsJsonObject("aa").get("city").getAsString());
+                holder.imageView.setImageDrawable(context.getDrawable(R.drawable.arrow_right_arrow_left_solid_black));
+                holder.airlineName.setText(returnsI.get(0).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("name").getAsString() + " " + returnsI.get(0).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("code").getAsString() + " " + returnsI.get(0).getAsJsonObject().getAsJsonObject("fD").get("fN").getAsString());
+                try {
+                    Date dof = df.parse(depDate);
+                    Date now = Calendar.getInstance().getTime();
+                    if (dof.before(now)) {
+                        holder.completedText.setVisibility(View.VISIBLE);
+                    }
+                    String dTime = df1.format(dof);
+                    holder.bookingArrivalDateText.setText(dTime);
+
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (returnsI.size() > 1) {
+                System.out.println("sI = " + returnsI.size());
+                System.out.println("sI = " + returnsI.size());
+                holder.bookingArrivalCityCodeText.setText(returnsI.get(returnsI.size() - 1).getAsJsonObject().getAsJsonObject("aa").get("cityCode").getAsString());
+                System.out.println("sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject(\"aa\").get(\"city\").getAsString() = " + returnsI.get(returnsI.size() - 1).getAsJsonObject().getAsJsonObject("aa").get("city").getAsString());
+                holder.booking_destination.setText("Trip to " + returnsI.get(returnsI.size() - 1).getAsJsonObject().getAsJsonObject("aa").get("city").getAsString());
                 holder.imageView.setImageDrawable(context.getDrawable(R.drawable.arrow_right_arrow_left_solid_black));
                 holder.airlineName.setText(sI.get(0).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("name").getAsString()
                         + " " + sI.get(0).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("code").getAsString()
                         + " " + sI.get(0).getAsJsonObject().getAsJsonObject("fD").get("fN").getAsString()
-                        + "," + sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("name").getAsString()
-                        + " " + sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("code").getAsString()
-                        + " " + sI.get(sI.size() - 1).getAsJsonObject().getAsJsonObject("fD").get("fN").getAsString());
+                        + "," + returnsI.get(returnsI.size() - 1).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("name").getAsString()
+                        + " " + returnsI.get(returnsI.size() - 1).getAsJsonObject().getAsJsonObject("fD").getAsJsonObject("aI").get("code").getAsString()
+                        + " " + returnsI.get(returnsI.size() - 1).getAsJsonObject().getAsJsonObject("fD").get("fN").getAsString());
                 try {
                     Date dof = df.parse(depDate);
-                    String adate = returnsI.get(sI.size() - 1).getAsJsonObject().get("at").getAsString();
+                    String adate = returnsI.get(returnsI.size() - 1).getAsJsonObject().get("at").getAsString();
                     Date aol = df.parse(adate);
                     Date now = Calendar.getInstance().getTime();
                     if (dof.before(now)) {
@@ -143,11 +143,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
                     throw new RuntimeException(e);
                 }
             }
-            holder.bookingDepartureCityCodeText.setText(sI.get(0).getAsJsonObject().getAsJsonObject("da").get("cityCode").getAsString());
-
+            holder.bookingDepartureCityCodeText.setText(returnsI.get(0).getAsJsonObject().getAsJsonObject("da").get("cityCode").getAsString());
         }
-
-
         holder.itemView.setOnClickListener(view -> {
             context.startActivity(new Intent(context, DisplayBookingActivity.class).putExtra("booking", String.valueOf(gson.toJson(booking))));
         });

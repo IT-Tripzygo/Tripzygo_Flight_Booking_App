@@ -55,7 +55,8 @@
         android:layout_marginTop="-57dp"
         android:foreground="#00000000"
         android:layout_toRightOf="@id/register_image"
-        android:src="@drawable/edit_square" />
+        android:src="@drawable/edit_square"
+        app:tint="@color/royalBlue" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/login_rel"
@@ -69,7 +70,7 @@
         android:enabled="true"
         android:hint="Full Name"
         android:orientation="vertical"
-        android:textColorHint="@color/grey"
+        android:textColorHint="@color/darkGrey"
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
@@ -90,8 +91,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:textColor="@color/grey"
-            android:textColorHint="@color/grey"
+            android:textColor="@color/darkGrey"
+            android:textColorHint="@color/darkGrey"
             android:textSize="15sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,7 +108,7 @@
         android:enabled="true"
         android:hint="Email"
         android:orientation="vertical"
-        android:textColorHint="@color/grey"
+        android:textColorHint="@color/darkGrey"
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
@@ -119,7 +120,7 @@
         app:hintAnimationEnabled="true"
         app:hintEnabled="true"
         app:hintTextAppearance="?attr/textAppearanceCaption"
-        app:hintTextColor="@color/grey"
+        app:hintTextColor="@color/darkGrey"
         app:startIconTint="#212121">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -127,8 +128,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:textColor="@color/grey"
-            android:textColorHint="@color/grey"
+            android:textColor="@color/darkGrey"
+            android:textColorHint="@color/darkGrey"
             android:textSize="15sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -150,9 +151,9 @@
             android:layout_gravity="center_vertical"
             android:textAlignment="gravity"
             app:ccpDialog_background="@color/white"
-            app:ccpDialog_searchEditTextTint="@color/white"
-            app:ccpDialog_textColor="@color/grey"
-            app:ccp_contentColor="@color/grey"
+            app:ccpDialog_searchEditTextTint="@color/darkGrey"
+            app:ccpDialog_textColor="@color/darkGrey"
+            app:ccp_contentColor="@color/darkGrey"
             app:ccp_padding="10dp"
             app:ccp_showArrow="false"
             app:ccp_showFlag="true"
@@ -174,8 +175,8 @@
             android:maxLength="10"
             android:padding="5dp"
             android:paddingStart="10dp"
-            android:textColor="@color/grey"
-            android:textColorHint="@color/grey"
+            android:textColor="@color/darkGrey"
+            android:textColorHint="@color/darkGrey"
             android:textSize="18sp" />
     </LinearLayout>
     <Button
@@ -192,5 +193,5 @@
         android:textAllCaps="false"
         android:textSize="18sp"
         android:foreground="#00000000"
-        app:backgroundTint="@color/red" />
+        app:backgroundTint="@color/royalBlue" />
 </RelativeLayout>

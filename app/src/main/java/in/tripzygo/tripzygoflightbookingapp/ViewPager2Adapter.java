@@ -10,8 +10,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.List;
 
-import in.tripzygo.tripzygoflightbookingapp.Fragments.CancelledBookingFragment;
-import in.tripzygo.tripzygoflightbookingapp.Fragments.FailedBookingFragment;
 import in.tripzygo.tripzygoflightbookingapp.Fragments.PastBookingFragment;
 import in.tripzygo.tripzygoflightbookingapp.Fragments.UpcomingBookingFragment;
 import in.tripzygo.tripzygoflightbookingapp.Modals.Booking;
@@ -46,12 +44,6 @@ public class ViewPager2Adapter extends FragmentStateAdapter {
             case 1:
                 PastBookingFragment pastBookingFragment = new PastBookingFragment(pastBookings);
                 return pastBookingFragment;
-            case 2:
-                CancelledBookingFragment cancelledBookingFragment = new CancelledBookingFragment();
-                return cancelledBookingFragment;
-            case 3:
-                FailedBookingFragment failedBookingFragment = new FailedBookingFragment();
-                return failedBookingFragment;
             default:
                 UpcomingBookingFragment upcomingBookingFragment1 = new UpcomingBookingFragment(upcomingBookings);
                 return upcomingBookingFragment1;

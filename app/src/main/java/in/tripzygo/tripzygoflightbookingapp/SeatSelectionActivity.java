@@ -49,7 +49,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
                         seats = gson.fromJson(String.valueOf(array), new TypeToken<List<Seat>>() {
                         }.getType());
                         GridLayoutManager manager = new GridLayoutManager(SeatSelectionActivity.this, COLUMNS);
-                        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lst_items);
+                        RecyclerView recyclerView = findViewById(R.id.lst_items);
                         recyclerView.setLayoutManager(manager);
                         SeatAdapter adapter = new SeatAdapter(seats, SeatSelectionActivity.this);
                         recyclerView.setAdapter(adapter);

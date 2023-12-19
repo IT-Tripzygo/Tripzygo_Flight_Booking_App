@@ -36,7 +36,14 @@ public class SharedPreference {
         editor.putString("login", s);
         editor.apply();
     }
-
+    public static void storeToken(Context context, String s) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        settings = context.getSharedPreferences("token_data", Context.MODE_PRIVATE);
+        editor = settings.edit();
+        editor.putString("token", s);
+        editor.apply();
+    }
     public static String loadLogin(Context context) {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
@@ -48,7 +55,17 @@ public class SharedPreference {
         }
         return Login;
     }
-
+    public static String getToken(Context context) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        String Token = "";
+        settings = context.getSharedPreferences("token_data", Context.MODE_PRIVATE);
+        if (settings.contains("token")) {
+            Token = settings.getString("token", "");
+            return Token;
+        }
+        return Token;
+    }
     public static void storeData(Context context, Bundle bundle) {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
@@ -112,7 +129,7 @@ public class SharedPreference {
                 jsonObject = new JSONObject(data);
                 Iterator<String> iter = jsonObject.keys();
                 while (iter.hasNext()) {
-                    String key = (String) iter.next();
+                    String key = iter.next();
                     String value = jsonObject.getString(key);
                     bundle.putString(key, value);
                 }
@@ -155,7 +172,7 @@ public class SharedPreference {
             favorites = new ArrayList<>(favorites);
         } else
             return null;
-        return (List<AirportCode>) favorites;
+        return favorites;
     }
 
 //    public static void addList(Context context, String pref_name, String key, String exercise_name) {

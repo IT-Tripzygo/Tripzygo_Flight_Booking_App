@@ -23,15 +23,17 @@ public class Retrofitt {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request newRequest = chain.request().newBuilder()
-                        .addHeader("apikey", "712228a05a6bda-c0a0-4e7b-8ee2-b0f5c70b8d16")
+                        .addHeader("apikey", "610937160b61a20a-6bf6-42c9-814e-fe56eb1815af")
                         .addHeader("Content-Type", "application/x-www-form-urlencoded")
                         .addHeader("Accept", "application/json")
                         .build();
                 return chain.proceed(newRequest);
             }
-        }).connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS).build();
+        }).connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .build();
         return new Retrofit.Builder()
-                .baseUrl("https://apitest.tripjack.com/").client(client)
+                .baseUrl("https://tripjack.com/").client(client)
                 .addConverterFactory(new NullOnEmptyConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())

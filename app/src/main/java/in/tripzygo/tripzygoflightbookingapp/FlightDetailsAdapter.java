@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -29,6 +32,7 @@ import in.tripzygo.tripzygoflightbookingapp.Tools.Sort;
 public class FlightDetailsAdapter extends RecyclerView.Adapter<FlightDetailsAdapter.ViewHolder> {
     FlightDetails flightDetails;
     Context context;
+    StorageReference storageReference;
     int size;
 
     public FlightDetailsAdapter(FlightDetails flightDetails, Context context, int size) {
@@ -52,6 +56,14 @@ public class FlightDetailsAdapter extends RecyclerView.Adapter<FlightDetailsAdap
         JsonObject jsonObject = sI.get(position).getAsJsonObject();
         JsonArray totalPriceList = gson.fromJson(flightDetails.getTotalPriceList(), new TypeToken<JsonArray>() {
         }.getType());
+        storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference storageReference1 = storageReference.child("AirlineLogos").child(flightDetails.getAirlineImage() + ".png");
+        storageReference1.getDownloadUrl().addOnSuccessListener(uri -> {
+            Glide.with(context).load(uri).into(holder.airlineImage);
+        }).addOnFailureListener(e -> {
+            System.out.println("storageReference1 = " + storageReference1);
+            System.out.println("e.getMessage() = " + e.getMessage());
+        });
         holder.airline_name.setText(jsonObject.getAsJsonObject("fD").getAsJsonObject("aI").get("name").getAsString() + " " + jsonObject.getAsJsonObject("fD").get("fN").getAsString());
         holder.DepartureCityCodeText.setText(jsonObject.getAsJsonObject("da").get("cityCode").getAsString());
         holder.DepartureAirportText.setText(jsonObject.getAsJsonObject("da").get("name").getAsString());
@@ -98,17 +110,20 @@ public class FlightDetailsAdapter extends RecyclerView.Adapter<FlightDetailsAdap
             holder.ArrivalTimeText.setText(aaTime);
             holder.ArrivalDateText.setText(aTime);
             List<JsonObject> jsonObjects = new ArrayList<>();
-            for (JsonElement jsonElement : totalPriceList) {
-                JsonObject jsonObject2 = jsonElement.getAsJsonObject();
-                jsonObjects.add(jsonObject2);
-            }
-            jsonObjects.sort(new Sort());
-            if (jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").getAsJsonObject("bI").has("cB") || jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").getAsJsonObject("bI").has("iB")) {
-                holder.cabin_baggage.setText("Cabin : " + jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").getAsJsonObject("bI").get("cB").getAsString());
-                holder.checkIn_baggage.setText("Check-in : " + jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").getAsJsonObject("bI").get("iB").getAsString());
-            } else {
-                holder.cabin_baggage.setText("Cabin : -");
-                holder.checkIn_baggage.setText("Check-in : -");
+            if (totalPriceList != null) {
+                for (JsonElement jsonElement : totalPriceList) {
+                    JsonObject jsonObject2 = jsonElement.getAsJsonObject();
+                    jsonObjects.add(jsonObject2);
+                }
+                jsonObjects.sort(new Sort());
+                holder.classTextView.setText(jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").get("cc").getAsString());
+                if (jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").getAsJsonObject("bI").has("cB") && jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").getAsJsonObject("bI").has("iB")) {
+                    holder.cabin_baggage.setText("Cabin : " + jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").getAsJsonObject("bI").get("cB").getAsString());
+                    holder.checkIn_baggage.setText("Check-in : " + jsonObjects.get(0).getAsJsonObject("fd").getAsJsonObject("ADULT").getAsJsonObject("bI").get("iB").getAsString());
+                } else {
+                    holder.cabin_baggage.setText("Cabin : -");
+                    holder.checkIn_baggage.setText("Check-in : -");
+                }
             }
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -117,8 +132,8 @@ public class FlightDetailsAdapter extends RecyclerView.Adapter<FlightDetailsAdap
             holder.layoverTextView.setVisibility(View.GONE);
         } else {
             System.out.println("size = " + size);
-            System.out.println("jsonObject.get(\"cT\") = " + sI.get(0).getAsJsonObject().get("cT").getAsInt());
             if (jsonObject.has("cT")) {
+                System.out.println("jsonObject.get(\"cT\") = " + sI.get(0).getAsJsonObject().get("cT").getAsInt());
                 String city = jsonObject.getAsJsonObject("aa").get("city").getAsString();
                 int minutes = jsonObject.get("cT").getAsInt();
 
@@ -141,7 +156,8 @@ public class FlightDetailsAdapter extends RecyclerView.Adapter<FlightDetailsAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView airline_name, DepartureCityCodeText, DepartureTimeText, ArrivalTimeText, ArrivalCityCodeText, DepartureDateText,
-                ArrivalDateText, DepartureAirportText, ArrivalAirportText, DepartureTerminalText, ArrivalTerminalText, cabin_baggage, checkIn_baggage, layoverTextView, timesTextView;
+                ArrivalDateText, DepartureAirportText, ArrivalAirportText, DepartureTerminalText, ArrivalTerminalText, cabin_baggage,
+                checkIn_baggage, layoverTextView, timesTextView,classTextView;
         ImageView airlineImage;
 
         public ViewHolder(@NonNull View itemView) {
@@ -162,6 +178,7 @@ public class FlightDetailsAdapter extends RecyclerView.Adapter<FlightDetailsAdap
             layoverTextView = itemView.findViewById(R.id.layoverText);
             airlineImage = itemView.findViewById(R.id.airlineImage);
             timesTextView = itemView.findViewById(R.id.timeText_Flight);
+            classTextView=itemView.findViewById(R.id.classCheckout);
         }
     }
 }

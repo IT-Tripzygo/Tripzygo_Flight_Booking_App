@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent_toolbar_search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,7 +16,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:background="#6842FF"
+        android:background="@drawable/search_bg"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
@@ -25,24 +26,21 @@
             android:id="@+id/img_tool_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_arrow_back_24" />
+            android:src="@drawable/arrow_back" />
 
 
         <EditText
             android:id="@+id/edt_tool_search"
+            style="@style/searchText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#4B6842FF"
-            android:cursorVisible="true"
+            android:background="#00FFFFFF"
             android:drawablePadding="20dp"
-            android:fontFamily="@font/amaranth"
             android:hint="Search airport code/city"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:singleLine="true"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
             android:textSize="16sp" />
 
         <ImageView
@@ -57,29 +55,64 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
-        android:layout_below="@id/linearsearch"
+        android:layout_below="@id/popularCities"
         android:background="#F2F2F2" />
 
+    <TextView
+        android:id="@+id/popularCities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearsearch"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:text="  POPULAR CITY"
+        android:textSize="13sp"
+        app:drawableStartCompat="@drawable/star"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ListView
+        android:id="@+id/popularList_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view"
+        android:background="@color/white"
+        android:divider="@android:color/darker_gray"
+        android:visibility="visible"
+        tools:itemCount="8"
+        tools:listitem="@layout/city_with_airport_item_layout" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/popularList_search"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:text="  ALL CITIES"
+        android:textSize="13dp"
+        app:drawableStartCompat="@drawable/star" />
 
     <ListView
         android:id="@+id/list_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textView6"
         android:background="@color/white"
-        android:layout_below="@id/view"
         android:divider="@android:color/darker_gray"
-        android:scrollbars="vertical"
-        android:visibility="gone" />
+        android:visibility="visible"
+        tools:listitem="@layout/city_with_airport_item_layout" />
 
     <TextView
         android:id="@+id/txt_empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/list_search"
         android:background="@color/white"
         android:gravity="center"
         android:padding="20dp"
-        android:layout_below="@id/list_search"
+        android:text="Not Found"
         android:textColor="?attr/colorOnSecondary"
         android:visibility="gone" />
-
 </RelativeLayout>

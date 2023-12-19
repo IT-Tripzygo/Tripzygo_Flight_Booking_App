@@ -1,183 +1,448 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/maininputback">
+        tools:context=".MainActivity">
 
-        <RadioGroup
-            android:id="@+id/radio_type"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
-            android:orientation="horizontal">
-
-
-            <RadioButton
-                android:id="@+id/oneway"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/selected_level_radio_oneway"
-                android:button="@null"
-                android:checked="true"
-                android:drawableStart="@drawable/plane_solid"
-                android:elevation="4dp"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="One Way"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <RadioButton
-                android:id="@+id/returnway"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/selected_level_radio_oneway"
-                android:button="@null"
-                android:checked="false"
-                android:drawableStart="@drawable/plane_solid_white"
-                android:elevation="4dp"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="Return"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/fromText"
+        <RelativeLayout
+            android:id="@+id/search_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/radio_type"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:background="#4B6842FF"
-            android:drawableLeft="@drawable/plane_departure_solid"
-            android:drawablePadding="20dp"
-            android:elevation="5dp"
-            android:padding="10dp"
-            android:text="From"
-            android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/exchange"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="-10dp"
-            android:padding="5dp"
-            android:rotation="90"
-            android:src="@drawable/arrow_right_arrow_left_solid"
-            android:background="@color/red"/>
-
-        <TextView
-            android:id="@+id/toText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fromText"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:background="#4B6842FF"
-            android:drawableLeft="@drawable/plane_arrival_solid"
-            android:drawablePadding="20dp"
-            android:editable="false"
-            android:elevation="5dp"
-            android:padding="10dp"
-            android:text="To"
-            android:textColor="@color/white"
-            android:textSize="17sp" />
-
-        <TextView
-            android:id="@+id/calendarText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toText"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:background="#4B6842FF"
-            android:drawableLeft="@drawable/baseline_calendar_today_24"
-            android:drawablePadding="20dp"
-            android:editable="false"
-            android:elevation="5dp"
-            android:padding="10dp"
-            android:text="When"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:textStyle="normal" />
-
-        <LinearLayout
-            android:id="@+id/passenger"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/calendarText"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:background="#4B6842FF"
-            android:elevation="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/personText"
+            <RadioGroup
+                android:id="@+id/radio_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/baseline_person_24"
-                android:drawablePadding="15dp"
-                android:padding="10dp"
-                android:text="1 Traveller "
-                android:textColor="@color/white"
-                android:textSize="17sp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp">
+
+                <RadioButton
+                    android:id="@+id/oneWay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:buttonTint="@color/blackLight"
+                    android:checked="true"
+                    android:text="One way"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/returnway"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:buttonTint="@color/blackLight"
+                    android:text="Round trip" />
+
+            </RadioGroup>
+
+            <View
+                android:id="@+id/view7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/radio_type"
+                android:layout_marginTop="15dp"
+                android:background="#DDDCDC"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/DRConstrainLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view7"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/firstCity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Delhi"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/fromText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DEL"
+                    android:textColor="@color/blackLight"
+                    android:textSize="40sp"
+                    app:layout_constraintEnd_toEndOf="@+id/firstCity"
+                    app:layout_constraintStart_toStartOf="@+id/firstCity"
+                    app:layout_constraintTop_toBottomOf="@+id/firstCity" />
+
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/exchange"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/swap_good"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/view"
+                    app:layout_constraintStart_toStartOf="@+id/view"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/secondCity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:text="Mumbai"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/toText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="BOM"
+                    android:textColor="@color/blackLight"
+                    android:textSize="40sp"
+                    app:layout_constraintEnd_toEndOf="@+id/secondCity"
+                    app:layout_constraintStart_toStartOf="@+id/secondCity"
+                    app:layout_constraintTop_toBottomOf="@+id/secondCity" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
                 android:id="@+id/view2"
-                android:layout_width="6dp"
-                android:layout_height="6dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/viewback" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/constraintLayout"
+                android:background="#DDDCDC"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-            <TextView
-                android:id="@+id/classText"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/DRConstrainLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="5dp"
-                android:padding="10dp"
-                android:text="Economy"
-                android:textColor="@color/white"
-                android:textSize="17sp" />
-        </LinearLayout>
+                android:layout_below="@id/constraintLayout"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-        <Button
-            android:id="@+id/search"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/departureDateSelection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/DepartureTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Departure"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/DepartureDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Thu, 6 July 23"
+                        android:textColor="@color/blackLight"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/DepartureTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/DepartureTitle" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/returnDateContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/returnDateText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="× Return"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/returnDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Sun, 9 July 23"
+                        android:textColor="@color/blackLight"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/returnDateText"
+                        app:layout_constraintTop_toBottomOf="@+id/returnDateText" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textAddReturn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Return"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/DRConstrainLayout"
+                android:background="#DDDCDC"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/DRConstrainLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view4"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/travellersAndClassContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/TandCText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Travellers &amp; Class"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/travellerCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="1 Traveller "
+                        android:textColor="@color/blackLight"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/TandCText"
+                        app:layout_constraintTop_toBottomOf="@+id/TandCText" />
+
+                    <TextView
+                        android:id="@+id/divider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" | "
+                        android:textColor="@color/blackLight"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/travellerCount"
+                        app:layout_constraintStart_toEndOf="@+id/travellerCount"
+                        app:layout_constraintTop_toTopOf="@+id/travellerCount" />
+
+
+                    <TextView
+                        android:id="@+id/classLevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Economy "
+                        android:textColor="@color/blackLight"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/divider"
+                        app:layout_constraintStart_toEndOf="@+id/divider"
+                        app:layout_constraintTop_toTopOf="@+id/divider" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/constraintLayout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:elevation="5dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/calendarText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:background="#4B6842FF"
+                    android:drawablePadding="20dp"
+                    android:elevation="5dp"
+                    android:padding="10dp"
+                    android:text="When"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:textStyle="normal"
+                    app:drawableLeftCompat="@drawable/baseline_calendar_today_24" />
+
+                <TextView
+                    android:id="@+id/calendarReturnText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:background="#4B6842FF"
+                    android:drawablePadding="20dp"
+                    android:elevation="5dp"
+                    android:padding="10dp"
+                    android:text="Return"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:textStyle="normal"
+                    android:visibility="gone"
+                    app:drawableLeftCompat="@drawable/baseline_calendar_today_24" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/passenger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/date"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:background="#4B6842FF"
+                android:elevation="5dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/personText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/baseline_person_24"
+                    android:drawablePadding="15dp"
+                    android:padding="10dp"
+                    android:text="1 Traveller "
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/viewback" />
+
+                <TextView
+                    android:id="@+id/classText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="5dp"
+                    android:padding="10dp"
+                    android:text="Economy"
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/constraintLayout3"
+                android:background="#DDDCDC"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+            <Button
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/constraintLayout3"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/blue_button"
+                android:paddingVertical="5dp"
+                android:text="Search"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:backgroundTint="@color/royalBlue" />
+        </RelativeLayout>
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/imageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/search_layout"
+            android:layout_marginHorizontal="@dimen/padding_10"
+            app:sliderAnimationDuration="600"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderAutoCycleEnabled="true"
+            app:sliderIndicatorAnimationDuration="600"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="#5A5A5A"
+            app:sliderIndicatorUnselectedColor="#FFF"
+            app:sliderScrollTimeInSec="1"
+            app:sliderStartAutoCycle="true" />
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/passenger"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/button_login"
-            android:text="Search"
-            android:textAllCaps="true"
-            app:backgroundTint="@color/red" />
+            android:layout_below="@id/imageSlider"
+            android:text="Explore the world!"
+            android:paddingHorizontal="20dp"
+            android:textStyle="bold"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="100dp"
+            android:textSize="80sp"/>
     </RelativeLayout>
-</RelativeLayout>
+</ScrollView>

@@ -15,7 +15,7 @@
         android:layout_marginLeft="33dp"
         android:layout_marginTop="50dp"
         android:text="OTP Verification"
-        android:textColor="@color/red"
+        android:textColor="@color/royalBlue"
         android:textSize="25sp" />
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:text="Please enter OTP code"
-        android:textColor="@color/grey"
+        android:textColor="@color/greyLighter"
         android:textSize="18sp" />
 
     <RelativeLayout
@@ -76,7 +76,7 @@
             android:layout_marginTop="30dp"
             android:enabled="true"
             android:hint="OTP"
-            android:textColorHint="@color/grey"
+            android:textColorHint="@color/darkGrey"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
@@ -100,7 +100,7 @@
                 android:inputType="number|text|textPhonetic"
                 android:paddingStart="20dp"
                 android:paddingEnd="10dp"
-                android:textColor="@color/grey"
+                android:textColor="@color/darkGrey"
                 android:textColorHint="@color/grey" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -118,7 +118,7 @@
             android:textAllCaps="false"
             android:textColor="#fff"
             android:textSize="15sp"
-            app:backgroundTint="@color/red" />
+            app:backgroundTint="@color/royalBlue" />
 
         <TextView
             android:id="@+id/resend_otp"

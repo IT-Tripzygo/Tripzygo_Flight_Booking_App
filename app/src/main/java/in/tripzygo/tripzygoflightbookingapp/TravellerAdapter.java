@@ -19,7 +19,7 @@ import in.tripzygo.tripzygoflightbookingapp.Modals.Traveller;
 public class TravellerAdapter extends RecyclerView.Adapter<TravellerAdapter.ViewHolder> {
     List<Traveller> travellerList, selectedTravellerList;
     Context context;
-    private int selectedItemIndex = 0;
+    private final int selectedItemIndex = 0;
     public TravellerAdapter(List<Traveller> travellerList, List<Traveller> selectedTravellerList, Context context) {
         this.travellerList = travellerList;
         this.selectedTravellerList = selectedTravellerList;

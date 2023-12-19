@@ -1,405 +1,433 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:shimmer="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView xmlns:shimmer="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/nested"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".FlightCheckoutActivity">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_checkOut"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@drawable/refs"
-            app:navigationIcon="@drawable/baseline_arrow_back_24">
-
-
-        </com.google.android.material.appbar.MaterialToolbar>
-
-        <TextView
-            android:id="@+id/DepartureCityText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar_checkOut"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/arrowImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar_checkOut"
-            android:layout_marginTop="16dp"
-            android:layout_toEndOf="@id/DepartureCityText"
-            android:src="@drawable/baseline_arrow_forward_24" />
-
-        <TextView
-            android:id="@+id/ArrivalCityText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar_checkOut"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@id/arrowImage"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/classText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/DepartureCityText"
-            android:layout_marginStart="10dp"
-            android:elevation="5dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/darkGrey"
-            android:textSize="11sp" />
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:layout_below="@id/DepartureCityText"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="6dp"
-            android:layout_toRightOf="@id/classText"
-            android:background="@drawable/viewback1"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/stopText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/DepartureCityText"
-            android:layout_toEndOf="@id/view2"
-            android:elevation="5dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/darkGrey"
-            android:textSize="11sp" />
-
-        <View
-            android:id="@+id/view3"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:layout_below="@id/DepartureCityText"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="6dp"
-            android:layout_toEndOf="@id/stopText"
-            android:background="@drawable/viewback1"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/timeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ArrivalCityText"
-            android:layout_toEndOf="@id/view3"
-            android:elevation="5dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/darkGrey"
-            android:textSize="11sp" />
-
-        <View
-            android:id="@+id/viewsept"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_below="@id/timeText"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/viewsepertor" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/flightDetailRecycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/viewsept"
-            tools:itemCount="0"
-            tools:listitem="@layout/flight_detail_layout" />
-
-        <TextView
-            android:id="@+id/fareSummaryText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/flightDetailRecycler"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:padding="3dp"
-            android:text="Fare Summary"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/FareTypeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fareSummaryText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="4dp"
-            android:text="Fare Type"
-            android:textColor="@color/darkGrey"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/BaseFareText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/FareTypeText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="4dp"
-            android:text="Base Fare"
-            android:textColor="@color/darkGrey"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/TaxesText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/BaseFareText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="4dp"
-            android:text="Taxes &amp; Fees"
-            android:textColor="@color/darkGrey"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/ConvenienceFeesText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/TaxesText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="4dp"
-            android:text="Convenience Fees*"
-            android:textColor="@color/darkGrey"
-            android:textSize="15sp"
-            android:textStyle="normal"
-            android:visibility="gone" />
-
-        <View
-            android:id="@+id/viewsept4"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_below="@id/ConvenienceFeesText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/viewsepertor" />
-
-        <TextView
-            android:id="@+id/NetPayableText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/viewsept4"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="4dp"
-            android:text="Net Payable Amount"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="normal" />
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_view_containerCheckout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:layout_below="@id/FareType"
-            android:orientation="vertical"
-            shimmer:duration="800">
-
-            <!-- Adding 7 rows of placeholders -->
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="27dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/background"
-                    android:padding="4dp"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/padding_20"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/background"
-                    android:padding="4dp"
-                    android:textSize="15sp" />
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/padding_20"
-                    android:layout_marginTop="20dp"
-                    android:padding="4dp"
-                    android:textSize="18sp"
-                    android:background="@color/background" />
-            </LinearLayout>
-
-        </com.facebook.shimmer.ShimmerFrameLayout>
-        <TextView
-            android:id="@+id/FareType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fareSummaryText"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="4dp"
-            android:textColor="@color/forestGreen"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-
-        <TextView
-            android:id="@+id/BaseFare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/FareTypeText"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="4dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-
-
-        <TextView
-            android:id="@+id/Taxes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/BaseFareText"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="4dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-
-
-        <TextView
-            android:id="@+id/ConvenienceFees"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/TaxesText"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="4dp"
-            android:text="₹ 299"
-            android:visibility="gone"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-
-
-        <TextView
-            android:id="@+id/NetPayable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/viewsept4"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="4dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/noteText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/NetPayableText"
-            android:layout_marginStart="10dp"
-
-            android:padding="4dp"
-            android:text="*Non-refundable charges"
-            android:textColor="@color/darkGrey"
-            android:textSize="13sp"
-            android:textStyle="normal"
-            android:visibility="visible" />
-
-        <View
-            android:id="@+id/viewsept5"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_below="@id/noteText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/viewsepertor" />
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_below="@id/viewsept5"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/bookrelativeback">
+            android:layout_height="wrap_content"
+            tools:context=".FlightCheckoutActivity">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_review"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/blackLight"
+                app:navigationIcon="@drawable/baseline_arrow_back_24"
+                app:title="Flight Review Details"
+                app:titleCentered="false">
+
+
+            </com.google.android.material.appbar.MaterialToolbar>
 
             <TextView
-                android:id="@+id/price_flight"
+                android:id="@+id/DepartureCityText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_below="@id/toolbar_review"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/arrowImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbar_review"
+                android:layout_marginTop="16dp"
+                android:layout_toEndOf="@id/DepartureCityText"
+                android:src="@drawable/baseline_arrow_forward_24" />
+
+            <TextView
+                android:id="@+id/ArrivalCityText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbar_review"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/arrowImage"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/classText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/DepartureCityText"
+                android:layout_marginStart="10dp"
+                android:elevation="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/darkGrey"
+                android:textSize="11sp" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_below="@id/DepartureCityText"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="6dp"
+                android:layout_toRightOf="@id/classText"
+                android:background="@drawable/viewback1"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/stopText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/DepartureCityText"
+                android:layout_toEndOf="@id/view2"
+                android:elevation="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/darkGrey"
+                android:textSize="11sp" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_below="@id/DepartureCityText"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="6dp"
+                android:layout_toEndOf="@id/stopText"
+                android:background="@drawable/viewback1"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/timeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ArrivalCityText"
+                android:layout_toEndOf="@id/view3"
+                android:elevation="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/darkGrey"
+                android:textSize="11sp" />
+
+            <View
+                android:id="@+id/viewsept"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@id/timeText"
                 android:layout_marginStart="15dp"
-                android:textColor="@color/white"
-                android:textSize="23sp" />
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/viewsepertor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/flightDetailRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewsept"
+                tools:itemCount="1"
+                tools:listitem="@layout/flight_detail_layout" />
 
             <TextView
-                android:id="@+id/noOfPassenger"
-                android:layout_width="wrap_content"
+                android:id="@+id/cancellation"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/price_flight"
-                android:text=" For "
-                android:textColor="#F2AE41"
-                android:textSize="14sp" />
+                android:layout_below="@id/flightDetailRecycler"
+                android:layout_marginTop="5dp"
+                android:drawablePadding="6dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="25dp"
+                android:text="Refund and Rescheduling Policy"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:background="@drawable/text_background"
+                shimmer:drawableEndCompat="@drawable/arrow_forward" />
 
-            <Button
-                android:id="@+id/bookNowButton"
+            <TextView
+                android:id="@+id/fareSummaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/cancellation"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="3dp"
+                android:text="Fare Summary"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/FareTypeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fareSummaryText"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="4dp"
+                android:text="Fare Type"
+                android:textColor="@color/darkGrey"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/BaseFareText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/FareTypeText"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="4dp"
+                android:text="Base Fare"
+                android:textColor="@color/darkGrey"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/TaxesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/BaseFareText"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="4dp"
+                android:text="Taxes &amp; Fees"
+                android:textColor="@color/darkGrey"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/ConvenienceFeesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/TaxesText"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="4dp"
+                android:text="Convenience Fees*"
+                android:textColor="@color/darkGrey"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/viewsept4"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@id/ConvenienceFeesText"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/viewsepertor" />
+
+            <TextView
+                android:id="@+id/NetPayableText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewsept4"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="4dp"
+                android:text="Total Amount"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="normal" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_containerCheckout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/FareType"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="25dp"
-                android:backgroundTint="#FA6C26"
-                android:text="Book Now"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                shimmer:duration="800">
+
+                <!-- Adding 7 rows of placeholders -->
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="27dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/background"
+                        android:padding="4dp"
+                        android:textSize="15sp" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/padding_20"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/background"
+                        android:padding="4dp"
+                        android:textSize="15sp" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/padding_20"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/background"
+                        android:padding="4dp"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TextView
+                android:id="@+id/FareType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fareSummaryText"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="4dp"
+                android:textColor="@color/forestGreen"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/BaseFare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/FareTypeText"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+
+            <TextView
+                android:id="@+id/Taxes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/BaseFareText"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+
+            <TextView
+                android:id="@+id/ConvenienceFees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/TaxesText"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="4dp"
+                android:text="₹ 299"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/NetPayable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewsept4"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/noteText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/NetPayableText"
+                android:layout_marginStart="10dp"
+                android:padding="4dp"
+                android:text="*Non-refundable charges"
+                android:textColor="@color/darkGrey"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/viewsept5"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@id/noteText"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="90dp"
+                android:background="@drawable/viewsepertor" />
+
         </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bookrelativeback">
+
+        <TextView
+            android:id="@+id/price_flight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+        <TextView
+            android:id="@+id/noOfPassenger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/price_flight"
+            android:text=" For "
+            android:textColor="#F2AE41"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/bookNowButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="25dp"
+            android:backgroundTint="@color/royalBlue"
+            android:text="Book Now"
+            android:paddingVertical="10dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
     </RelativeLayout>
-</androidx.core.widget.NestedScrollView>
+</RelativeLayout>
+

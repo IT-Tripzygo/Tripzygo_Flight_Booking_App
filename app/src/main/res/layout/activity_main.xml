@@ -11,7 +11,7 @@
         style="@style/Widget.MaterialComponents.Toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#6842FF"
+        android:background="@color/blackLight"
         app:title="@string/app_name"
         app:popupTheme="@style/PopupMenuStyle"
         app:titleCentered="false"
@@ -34,7 +34,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         app:labelVisibilityMode="labeled"
-        app:itemIconTint="#6842FF"
+        app:itemIconTint="@color/blackLight"
         app:itemTextColor="?attr/colorOnSecondary"
         app:menu="@menu/bottom_nav_menu" />
 </RelativeLayout>

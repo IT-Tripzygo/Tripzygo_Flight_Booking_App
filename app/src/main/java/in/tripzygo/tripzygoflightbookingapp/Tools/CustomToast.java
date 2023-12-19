@@ -18,9 +18,9 @@ public class CustomToast {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 
         View layout = inflater.inflate(R.layout.activity_custom_toast,
-                (ViewGroup) ((Activity) context).findViewById(R.id.custom_toast_layout));
+                ((Activity) context).findViewById(R.id.custom_toast_layout));
 
-        TextView text = (TextView) layout.findViewById(R.id.custom_toast_message);
+        TextView text = layout.findViewById(R.id.custom_toast_message);
         text.setText(message);
 
         layout.setBackgroundColor(color);

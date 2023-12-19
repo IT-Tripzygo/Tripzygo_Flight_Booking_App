@@ -34,6 +34,7 @@ public class PassengerBookingAdapter extends RecyclerView.Adapter<PassengerBooki
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         JsonObject jsonObject=jsonArray.get(position).getAsJsonObject();
+        System.out.println("string = " + string);
         holder.passengerNameTextView.setText(jsonObject.get("fN").getAsString()+" "+jsonObject.get("lN").getAsString());
         holder.pnrTextView.setText(jsonObject.get("pnrDetails").getAsJsonObject().get(string).getAsString()+" -");
 

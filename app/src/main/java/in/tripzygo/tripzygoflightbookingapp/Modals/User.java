@@ -3,7 +3,7 @@ package in.tripzygo.tripzygoflightbookingapp.Modals;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    String user_name, email_id, phone_no, profile_img, code;
+    String user_name, email_id, phone_no, profile_img, code,gstNumber;
     Long mobileNo;
 
     public String getCode() {
@@ -54,4 +54,11 @@ public class User implements Serializable {
         this.phone_no = phone_no;
     }
 
+    public String getGstNumber() {
+        return gstNumber;
+    }
+
+    public void setGstNumber(String gstNumber) {
+        this.gstNumber = gstNumber;
+    }
 }

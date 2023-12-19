@@ -1,47 +1,29 @@
 package in.tripzygo.tripzygoflightbookingapp;
 
-import static android.graphics.Color.WHITE;
-
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
-import com.canhub.cropper.CropImage;
-import com.canhub.cropper.CropImageContract;
-import com.canhub.cropper.CropImageContractOptions;
-import com.canhub.cropper.CropImageOptions;
-import com.canhub.cropper.CropImageView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.hbb20.CountryCodePicker;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import in.tripzygo.tripzygoflightbookingapp.Modals.User;
@@ -65,11 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
     boolean phoneExisted;
     StorageReference storageReference;
     User user = new User();
-    private final ActivityResultLauncher<CropImageContractOptions> cropImage =
-            registerForActivityResult(new CropImageContract(), this::onCropImageResult);
     private Uri outputUri;
-    private final ActivityResultLauncher<Uri> takePicture =
-            registerForActivityResult(new ActivityResultContracts.TakePicture(), this::onTakePictureResult);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         countryCodePicker.setCountryForNameCode(nameCode);
         phoneInputEditText.setText(phone);
         editImageView.setOnClickListener(v -> {
-            startCameraWithUri();
+//            startCameraWithUri();
         });
         startButton.setOnClickListener(v -> {
             Code = countryCodePicker.getSelectedCountryCodeWithPlus();
@@ -126,7 +104,12 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void startCameraWithUri() {
-        CropImageContractOptions options = new CropImageContractOptions(outputUri, new CropImageOptions())
+//        ImagePicker.with(ProfileActivity.this)
+//                .crop()                    //Crop image(Optional), Check Customization for more option
+//                .compress(1024)            //Final image size will be less than 1 MB(Optional)
+//                .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+//                .start();
+       /* CropImageContractOptions options = new CropImageContractOptions(outputUri, new CropImageOptions())
                 .setScaleType(CropImageView.ScaleType.FIT_CENTER)
                 .setCropShape(CropImageView.CropShape.OVAL)
                 .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
@@ -147,8 +130,8 @@ public class ProfileActivity extends AppCompatActivity {
                 .setBorderCornerLength(14f)
                 .setBorderCornerColor(WHITE)
                 .setGuidelinesThickness(1f)
-                .setGuidelinesColor(R.color.white)
-                .setBackgroundColor(Color.argb(119, 0, 0, 0))
+                .setGuidelinesColor(R.color.black)
+                .setBackgroundColor(R.color.black)
                 .setMinCropWindowSize(24, 24)
                 .setMinCropResultSize(20, 20)
                 .setMaxCropResultSize(99999, 99999)
@@ -164,102 +147,68 @@ public class ProfileActivity extends AppCompatActivity {
                 .setAllowCounterRotation(false)
                 .setFlipHorizontally(false)
                 .setFlipVertically(false)
-                .setCropMenuCropButtonTitle(null)
-                .setCropMenuCropButtonIcon(0)
+                .setCropMenuCropButtonTitle("crop")
+                .setCropMenuCropButtonIcon(R.drawable.button_login)
                 .setAllowRotation(true)
                 .setNoOutputImage(false)
-                .setFixAspectRatio(false);
-        cropImage.launch(options);
+                .setFixAspectRatio(true);
+        cropImage.launch(options);*/
 
     }
 
-    public void showErrorMessage(@NotNull String message) {
-        Log.e("Camera Error:", message);
-        Toast.makeText(this, "Crop failed: " + message, Toast.LENGTH_SHORT).show();
-    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            // Image Uri will not be null for RESULT_OK
+            path = data.getData();
+            // Use Uri object instead of File to avoid storage permissions
+            circleImageView.setImageURI(path);
+            System.out.println("path = " + path);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
+                circleImageView.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            StorageReference filepath = storageReference.child("image" + phone + path.getLastPathSegment());
 
-    private void startTakePicture() {
-        try {
-            Context ctx = getApplicationContext();
-            String authorities = ctx.getPackageName() + AUTHORITY_SUFFIX;
-            outputUri = FileProvider.getUriForFile(ctx, authorities, createImageFile());
-            takePicture.launch(outputUri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+            final UploadTask uploadTask = filepath.putFile(path);
+            ProgressDialog loadingBar;
+            loadingBar = new ProgressDialog(this);
+            loadingBar.show();
+            uploadTask.addOnFailureListener(e -> {
+                loadingBar.dismiss();
+                CustomToast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT, Color.RED);
+            }).addOnSuccessListener(taskSnapshot -> {
 
-    public void handleCropImageResult(@NotNull String uri) {
-        path = Uri.parse(uri);
-        System.out.println("path = " + path);
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
-            circleImageView.setImageBitmap(bitmap);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        StorageReference filepath = storageReference.child("image" + phone + path.getLastPathSegment());
+                Task<Uri> uriTask = uploadTask.continueWithTask(task -> {
 
-        final UploadTask uploadTask = filepath.putFile(path);
-        ProgressDialog loadingBar;
-        loadingBar = new ProgressDialog(this);
-        loadingBar.show();
-        uploadTask.addOnFailureListener(e -> {
-            loadingBar.dismiss();
-            CustomToast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT, Color.RED);
-        }).addOnSuccessListener(taskSnapshot -> {
-
-            Task<Uri> uriTask = uploadTask.continueWithTask(task -> {
-
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
-                return filepath.getDownloadUrl();
-
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-
-                    if (task.isSuccessful()) {
-                        loadingBar.dismiss();
-                        imageUrl = task.getResult().toString();
-                        user.setProfile_img(imageUrl);
-                        System.out.println("url " + task.getResult().toString());
-                        CustomToast.makeText(ProfileActivity.this, "Image uploaded Successfully...", Toast.LENGTH_SHORT, Color.parseColor("#32CD32"));
-
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
                     }
-                }
+                    return filepath.getDownloadUrl();
+
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+
+                        if (task.isSuccessful()) {
+                            loadingBar.dismiss();
+                            imageUrl = task.getResult().toString();
+                            user.setProfile_img(imageUrl);
+                            System.out.println("url " + task.getResult().toString());
+                            CustomToast.makeText(ProfileActivity.this, "Image uploaded Successfully...", Toast.LENGTH_SHORT, Color.parseColor("#32CD32"));
+
+                        }
+                    }
+                });
             });
-        });
-    }
-
-    private File createImageFile() throws IOException {
-        SimpleDateFormat timeStamp = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-        File storageDir = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        return File.createTempFile(
-                FILE_NAMING_PREFIX + timeStamp + FILE_NAMING_SUFFIX,
-                FILE_FORMAT,
-                storageDir
-        );
-    }
-
-    public void onCropImageResult(@NonNull CropImageView.CropResult result) {
-        if (result.isSuccessful()) {
-            handleCropImageResult(Objects.requireNonNull(result.getUriContent())
-                    .toString()
-                    .replace("file:", ""));
-        } else if (result.equals(CropImage.CancelledResult.INSTANCE)) {
-            showErrorMessage("cropping image was cancelled by the user");
-        } else {
-            showErrorMessage("cropping image failed");
         }
-    }
-
-    public void onTakePictureResult(boolean success) {
-        if (success) {
-            startCameraWithUri();
-        } else {
-            showErrorMessage("taking picture failed");
-        }
+//        else if (resultCode == ImagePicker.RESULT_ERROR) {
+//            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
+//        }
     }
 }

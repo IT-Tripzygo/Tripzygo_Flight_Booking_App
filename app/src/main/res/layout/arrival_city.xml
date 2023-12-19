@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/horizontalBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        app:tint="#61121111"
+        android:src="@drawable/bar_horizontal"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/closeDialog"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/arrivalCityTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Select Arrival city"
+        android:textColor="@color/blackLight"
+        android:textSize="18sp"
+        android:layout_marginStart="20dp"
+        android:textStyle="bold"
+        android:layout_below="@id/closeDialog"
+         />
+
+    <EditText
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="14sp"
+        android:drawableStart="@drawable/search"
+        android:hint="Search for city name or airport"
+        android:background="@drawable/search_bg"
+        android:paddingVertical="15dp"
+        android:paddingHorizontal="15dp"
+        android:inputType="text"
+        android:layout_below="@+id/arrivalCityTitle" />
+
+    <TextView
+        android:id="@+id/popularCities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:text="  POPULAR CITY"
+        android:textSize="13dp"
+        app:drawableStartCompat="@drawable/star"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_below="@+id/searchView" />
+
+    <ListView
+        android:id="@+id/arrivalCityList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_below="@+id/popularCities" />
+
+
+</RelativeLayout>

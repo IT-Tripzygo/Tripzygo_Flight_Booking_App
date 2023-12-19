@@ -13,4 +13,22 @@
         <item name="android:statusBarColor">#6842FF</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slid_in_bottom_sheet</item>
+        <item name="android:windowExitAnimation">@anim/slid_out_bottom_sheet</item>
+    </style>
+    <style name="imageRotate">
+        <item name="android:animation">@anim/rotate</item>
+    </style>
+
+    <style name="CalendarTheme" parent="Theme.AppCompat">
+        <item name="color">#B821DA</item>
+        <item name="android:headerBackground">@color/blue</item>
+        <item name="colorButtonNormal">@color/white</item>
+    </style>
+
+    <style name="FragmentNavigation">
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="fontFamily">@values/font_certs</item>
+    </style>
 </resources>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/fare_back"
+    android:paddingStart="10dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="10dp"
+    android:layout_marginVertical="5dp">
+    <ImageView
+        android:id="@+id/fareColor"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:visibility="gone"
+        android:src="@color/peach" />
+    <TextView
+        android:id="@+id/FareIdentifier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/fareColor"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="3dp"
+        android:text="Published"
+        android:background="@drawable/peach_background"
+        android:textColor="@color/darkPeach"
+        android:textSize="13sp"
+        android:textStyle="normal" />
+    <TextView
+        android:id="@+id/priceFare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginEnd="5dp"
+        android:text="₹4,999"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/FareRules"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/priceFare"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:padding="3dp"
+        android:text="Fare Rules"
+        android:textColor="@color/royalBlue"
+        android:textSize="11sp"
+        android:textStyle="normal" />
+    <TextView
+        android:id="@+id/Baggage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7 KG, 15 KG"
+        android:textSize="13sp"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="5dp"
+        android:gravity="center_vertical"
+        android:layout_toStartOf="@id/classTypeFareLayout"
+        android:layout_below="@id/FareIdentifier"
+        android:drawablePadding="5dp"
+        android:layout_marginTop="15dp"
+        app:drawableStartCompat="@drawable/baseline_shopping_bag_24"
+        app:drawableTint="@color/darkGrey" />
+
+    <TextView
+        android:id="@+id/FareTypeFareLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/priceFare"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toStartOf="@id/FareRules"
+        android:background="@drawable/refund_back"
+        android:backgroundTint="@color/forestGreen"
+        android:padding="3dp"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="normal" />
+
+    <TextView
+        android:id="@+id/classTypeFareLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/priceFare"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toStartOf="@id/FareTypeFareLayout"
+        android:background="@drawable/refund_back"
+        android:backgroundTint="@color/darkGrey"
+        android:padding="3dp"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="normal" />
+</RelativeLayout>

@@ -16,8 +16,8 @@ import in.tripzygo.tripzygoflightbookingapp.Fragments.MyBookingFragment;
 import in.tripzygo.tripzygoflightbookingapp.Fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
-    BottomNavigationView bottomNavigationView;
-    MaterialToolbar materialToolbar;
+    public static BottomNavigationView bottomNavigationView;
+   public static MaterialToolbar materialToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void loadFragment(Fragment fragment) {
+    public  void loadFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment).commit();
         if (fragment.getClass().getSimpleName().matches(HomeFragment.class.getSimpleName())) {
-            materialToolbar.setTitle("Flight Booking");
-        } else {
-            materialToolbar.setTitle(fragment.getClass().getSimpleName());
+            materialToolbar.setTitle("Book Flights");
+        } else if (fragment.getClass().getSimpleName().matches(MyBookingFragment.class.getSimpleName())) {
+            materialToolbar.setTitle("My Bookings");
+        } else if (fragment.getClass().getSimpleName().matches(ProfileFragment.class.getSimpleName())) {
+            materialToolbar.setTitle("Profile");
         }
     }
 
